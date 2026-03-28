@@ -48,28 +48,28 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
               
-              <button @click="handleEmailCheckout" :disabled="isProcessing"
+              <button @click="handleEmailOrder" :disabled="isProcessing"
                       class="group relative py-5 bg-black text-white text-[10px] font-bold uppercase tracking-[0.2em] overflow-hidden transition-all hover:shadow-xl active:scale-95 disabled:bg-gray-400">
                 <span class="relative z-10 flex items-center justify-center gap-2">
                   <Icon v-if="isProcessing" name="line-md:loading-twotone-loop" />
                   <Icon v-else name="ph:envelope-simple-fill" />
-                  {{ isProcessing ? 'Sending...' : 'Confirm via Email' }}
+                  {{ isProcessing ? 'Sending...' : 'Confirm Order via Email' }}
                 </span>
                 <div class="absolute inset-0 bg-[#1a1a1a] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
               </button>
 
               <button @click="sendToWhatsApp"
-                      class="group relative py-5 bg-[#25D366] text-white text-[10px] font-bold uppercase tracking-[0.2em] overflow-hidden transition-all hover:shadow-xl active:scale-95">
+                      class="group relative py-5 bg-[#25D366] text-white text-[10px] font-bold uppercase tracking-[0.2em] overflow-hidden transition-all hover:shadow-xl active:scale-95 disabled:bg-opacity-50">
                 <span class="relative z-10 flex items-center justify-center gap-2">
                   <Icon name="logos:whatsapp-icon" class="brightness-0 invert" />
-                  Order on WhatsApp
+                  Order via WhatsApp
                 </span>
                 <div class="absolute inset-0 bg-[#128C7E] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
               </button>
 
             </div>
-            <p v-if="mailSuccess" class="text-center text-green-600 text-[11px] font-bold uppercase tracking-widest animate-pulse">
-              ✔ Order confirmed! We have received your email.
+            <p v-if="mailSuccess" class="text-center text-green-600 text-[11px] font-bold uppercase tracking-widest animate-pulse mt-4">
+              ✔ Order Confirmed! We have received your order.
             </p>
           </div>
         </div>
@@ -129,7 +129,7 @@ const sendToWhatsApp = () => {
   }
 
   const itemsText = cartStore.items.map(item => 
-    `• *${item.name}* (Size: ${item.size}, Qty: ${item.quantity})`
+    `• *${item.name}* (Size: ${item.size || 'N/A'}, Qty: ${item.quantity})`
   ).join('\n')
 
   const message = `*NEW ZILBER ORDER (WHATSAPP)*\n\n*Customer:* ${form.value.name}\n*Phone:* ${form.value.phone}\n*Address:* ${form.value.address}, ${form.value.city}\n\n*Items:*\n${itemsText}\n\n*Total:* Rs. ${cartStore.totalPrice.toLocaleString()}`;
@@ -138,30 +138,45 @@ const sendToWhatsApp = () => {
   window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank')
 }
 
-// Function 2: Pure NodeMailer (Email) logic
-const handleEmailCheckout = async () => {
+// Function 2: Pure NodeMailer (Email) logic (Express Backend)
+const handleEmailOrder = async () => {
   if (!form.value.name || !form.value.phone || !form.value.address) {
     return alert('Please fill shipping details first.')
   }
 
   isProcessing.value = true
+  mailSuccess.value = false
+
   try {
-    const { data, error } = await useFetch('/api/send-email', {
+    // Note: If you are running Express locally on port 3000, un-comment the next URL setup:
+    // const apiUrl = "http://localhost:3000/api/send-email"; 
+    // And comment out the relative URL below:
+    const apiUrl = "/api/send-email";
+
+    const response = await fetch(apiUrl, {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         customer: form.value,
         items: cartStore.items,
         total: cartStore.totalPrice
-      }
+      })
     })
 
-    if (error.value) throw new Error("Email Failed")
+    const data = await response.json()
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Email Failed")
+    }
 
     mailSuccess.value = true
-    alert('Order Confirmed via Email!')
-    // cartStore.clearCart() // Optional: Cart clear kar dein
+    
+    // Optional: Clear form data after successful call
+    // cartStore.clearCart() // if exist
   } catch (err) {
-    alert('Email service error. Please use WhatsApp button.')
+    console.error("API Error: ", err)
+    alert('Failed to process email. Please try via WhatsApp.')
   } finally {
     isProcessing.value = false
   }
