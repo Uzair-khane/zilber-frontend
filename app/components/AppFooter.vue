@@ -1,76 +1,163 @@
 <template>
-  <footer class="bg-charcoal text-offwhite py-16">
-    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-      
-      <!-- Column 1: Brand & Socials -->
+  <footer class="bg-[#1A1A1A] text-[#F7F4EF] pt-16 pb-10">
+
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+      <!-- Brand -->
       <div>
-        <h2 class="text-2xl font-serif text-gold tracking-widest mb-4">ZILBER</h2>
-        <p class="text-sm text-gray-400 mb-6">
-          Authentic, handcrafted Charsada Chappals bringing traditional elegance to modern footwear. Experience the premium standard.
+        <h2 class="text-2xl tracking-[0.3em] text-[#D4AF37] font-semibold mb-4">
+          ZILBER
+        </h2>
+
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Authentic handcrafted Charsadda Chappals — jahan riwayat milti hai modern comfort se.
         </p>
-        <div class="flex space-x-4">
-          <a href="#" class="hover:text-gold transition-colors"><Icon name="mdi:facebook" class="w-6 h-6" /></a>
-          <a href="#" class="hover:text-gold transition-colors"><Icon name="mdi:instagram" class="w-6 h-6" /></a>
-          <a href="#" class="hover:text-gold transition-colors"><Icon name="mdi:twitter" class="w-6 h-6" /></a>
+
+        <!-- Social Icons -->
+        <div class="flex gap-4">
+          <a href="#" class="social-icon">
+            <Icon name="mdi:facebook" />
+          </a>
+          <a href="#" class="social-icon">
+            <Icon name="mdi:instagram" />
+          </a>
+          <a href="#" class="social-icon">
+            <Icon name="ic:baseline-tiktok" />
+          </a>
+          <a href="#" class="social-icon whatsapp">
+            <Icon name="mdi:whatsapp" />
+          </a>
         </div>
       </div>
 
-      <!-- Column 2: Customer Care -->
+      <!-- Quick Links -->
       <div>
-        <h3 class="font-serif text-lg text-gold mb-4">Customer Care</h3>
-        <ul class="space-y-2 text-sm text-gray-400">
-          <li><NuxtLink to="/contact" class="hover:text-white transition-colors">Contact Us</NuxtLink></li>
-          <li><NuxtLink to="/shipping" class="hover:text-white transition-colors">Shipping & Delivery</NuxtLink></li>
-          <li><NuxtLink to="/returns" class="hover:text-white transition-colors">Exchange & Returns</NuxtLink></li>
-          <li><NuxtLink to="/faq" class="hover:text-white transition-colors">FAQs</NuxtLink></li>
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links">
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/collections/kaptan">Kaptan</NuxtLink></li>
+          <li><NuxtLink to="/collections/zalmi">Zalmi</NuxtLink></li>
+          <li><NuxtLink to="/collections/new-arrivals">New Arrivals</NuxtLink></li>
         </ul>
       </div>
 
-      <!-- Column 3: Information -->
+      <!-- Help -->
       <div>
-        <h3 class="font-serif text-lg text-gold mb-4">Information</h3>
-        <ul class="space-y-2 text-sm text-gray-400">
-          <li><NuxtLink to="/about" class="hover:text-white transition-colors">Our Story</NuxtLink></li>
-          <li><NuxtLink to="/materials" class="hover:text-white transition-colors">Leather Quality</NuxtLink></li>
-          <li><NuxtLink to="/privacy" class="hover:text-white transition-colors">Privacy Policy</NuxtLink></li>
-          <li><NuxtLink to="/terms" class="hover:text-white transition-colors">Terms of Service</NuxtLink></li>
+        <h3 class="footer-title">Customer Care</h3>
+        <ul class="footer-links">
+          <li><NuxtLink to="/contact">Contact Us</NuxtLink></li>
+          <li><NuxtLink to="/shipping">Shipping Info</NuxtLink></li>
+          <li><NuxtLink to="/returns">Returns</NuxtLink></li>
+          <li><NuxtLink to="/faq">FAQ</NuxtLink></li>
         </ul>
       </div>
 
-      <!-- Column 4: Newsletter -->
+      <!-- WhatsApp CTA -->
       <div>
-        <h3 class="font-serif text-lg text-gold mb-4">Newsletter</h3>
-        <p class="text-sm text-gray-400 mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
-        <form @submit.prevent="submitNewsletter" class="flex flex-col space-y-3">
-          <input 
-            v-model="email" 
-            type="email" 
-            placeholder="Enter your email address" 
-            class="bg-transparent border border-gray-600 px-4 py-2 text-sm text-offwhite focus:outline-none focus:border-gold transition-colors"
-            required
-          />
-          <button type="submit" class="bg-gold text-charcoal font-medium py-2 text-sm uppercase tracking-wider hover:bg-yellow-600 transition-colors">
-            Subscribe
-          </button>
-        </form>
+        <h3 class="footer-title">Need Help?</h3>
+
+        <p class="text-sm text-gray-400 mb-4">
+          Order directly on WhatsApp for quick support and fast checkout.
+        </p>
+
+        <button class="whatsapp-btn" @click="openWhatsApp">
+          <Icon name="mdi:whatsapp" class="w-5 h-5" />
+          Chat on WhatsApp
+        </button>
       </div>
 
     </div>
-    <div class="container mx-auto px-4 mt-12 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
-      &copy; {{ new Date().getFullYear() }} Zilber Footwear. All Rights Reserved.
+
+    <!-- Bottom -->
+    <div class="max-w-7xl mx-auto px-4 mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+      © {{ new Date().getFullYear() }} Zilber Footwear. All Rights Reserved.
     </div>
+
   </footer>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const email = ref('')
-
-const submitNewsletter = () => {
-  // Integrate with backend /api/newsletter
-  console.log('Newsletter submitted:', email.value)
-  email.value = ''
-  alert('Thank you for subscribing to Zilber!')
+const openWhatsApp = () => {
+  const msg = encodeURIComponent("Hi Zilber! I want to place an order.")
+  window.open(`https://wa.me/923001234567?text=${msg}`, '_blank')
 }
 </script>
+
+<style scoped>
+
+/* Titles */
+.footer-title {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+/* Links */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: #bbb;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #D4AF37;
+  transform: translateX(4px);
+}
+
+/* Social Icons */
+.social-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  color: #bbb;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #D4AF37;
+  border-color: #D4AF37;
+  transform: translateY(-3px);
+}
+
+/* WhatsApp special */
+.whatsapp:hover {
+  color: #25D366 !important;
+  border-color: #25D366 !important;
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+}
+
+</style>

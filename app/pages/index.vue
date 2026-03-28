@@ -91,6 +91,13 @@
       </div>
     </section>
 
+    <div><WhyChoseUs /></div>
+    <div>
+      <OurCustomer/>
+    </div>
+    <div>
+      <FAQ/>
+    </div>
     <section class="py-32 bg-charcoal text-offwhite border-t-8 border-gold relative overflow-hidden">
       <div class="absolute inset-0 opacity-5 pointer-events-none">
         <div class="absolute inset-0" style="background-image: url('https://www.transparenttextures.com/patterns/leather.png')"></div>
@@ -102,7 +109,7 @@
           <h2 class="text-5xl md:text-6xl font-serif text-gold mt-4 mb-6">The Zilber Standard</h2>
           <div class="h-1 w-24 bg-gold mx-auto"></div>
           <p class="text-gray-400 mt-8 max-w-2xl mx-auto font-light text-xl italic leading-relaxed">
-            "We don't just make footwear; we preserve a 100-year-old legacy with modern comfort."
+            "We don't just make footwear; we preserve a 40-year-old legacy with modern comfort."
           </p>
         </div>
         
@@ -151,6 +158,9 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import Product from '../components/products/Product.vue'
+import WhyChoseUs from '../components/WhyChoseUs.vue'
+import OurCustomer from '../components/OurCustomer.vue'
+import FAQ from '../components/FAQ.vue'
 </script>
 
 <style scoped>
