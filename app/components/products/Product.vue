@@ -2,41 +2,43 @@
   <div class="page-wrap bg-[#F7F4EF] min-h-screen py-[52px] pb-24">
     <div class="container max-w-[1400px] mx-auto px-4 md:px-8 lg:px-[56px]">
 
-      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-8 mb-10">
+      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-8 mb-12">
         <div class="header-left">
-          <p class="font-montserrat text-[9px] font-bold tracking-[0.35em] uppercase text-[#D4AF37] mb-2.5">
-            Zilber Premium Footwear
+          <p class="font-montserrat text-[10px] font-bold tracking-[0.4em] uppercase text-[#D4AF37] mb-3">
+            Handcrafted in Pakistan
           </p>
-          <h2 class="font-cormorant italic font-semibold text-[clamp(44px,7vw,72px)] text-[#1A1A1A] tracking-tighter leading-none mb-3">
+          <h2 class="font-cormorant italic font-semibold text-[clamp(48px,8vw,80px)] text-[#1A1A1A] tracking-tighter leading-[0.9] mb-4">
             The Archive
           </h2>
-          <p class="flex items-baseline gap-2">
-            <span class="font-cormorant text-2xl font-semibold text-[#D4AF37]">{{ filteredProducts.length }}</span>
-            <span class="font-montserrat text-[10px] font-semibold tracking-widest uppercase text-gray-400">Handcrafted Masterpieces</span>
-          </p>
+          <div class="flex items-center gap-3">
+            <span class="h-[1px] w-8 bg-[#D4AF37]"></span>
+            <p class="font-montserrat text-[11px] font-medium tracking-widest uppercase text-gray-500">
+              Showing <span class="text-[#1A1A1A] font-bold">{{ filteredProducts.length }}</span> Curated Pieces
+            </p>
+          </div>
         </div>
 
-        <div class="flex flex-col items-end gap-3.5 w-full lg:w-auto lg:min-w-[340px]">
-          <div class="relative w-full lg:max-w-[320px]">
-            <Icon name="lucide:search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-gray-400 pointer-events-none" />
+        <div class="flex flex-col items-end gap-5 w-full lg:w-auto lg:min-w-[400px]">
+          <div class="relative w-full">
+            <Icon name="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Search chappals..."
-              class="w-full bg-white border-[1.5px] border-black/10 rounded-md py-3 px-10 font-montserrat text-xs font-medium text-[#1A1A1A] outline-none focus:border-[#D4AF37] focus:ring-4 focus:ring-[#D4AF37]/10 transition-all"
+              placeholder="Search by name or style..."
+              class="w-full bg-white border border-black/5 rounded-full py-4 px-12 font-montserrat text-[13px] text-[#1A1A1A] shadow-sm outline-none focus:ring-2 focus:ring-[#D4AF37]/20 transition-all placeholder:text-gray-300"
             />
           </div>
 
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap justify-end gap-2">
             <button
               v-for="cat in categories"
               :key="cat"
               @click="activeCategory = cat"
               :class="[
-                'px-4 py-2 rounded-full font-montserrat text-[10px] font-bold tracking-widest uppercase border-[1.5px] transition-all whitespace-nowrap',
+                'px-5 py-2.5 rounded-full font-montserrat text-[9px] font-bold tracking-[0.15em] uppercase border transition-all',
                 activeCategory === cat 
-                  ? 'bg-[#1A1A1A] border-[#1A1A1A] text-[#FAF9F6] shadow-lg shadow-black/20' 
-                  : 'bg-white border-black/10 text-gray-600 hover:border-[#D4AF37] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5'
+                  ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-xl translate-y-[-2px]' 
+                  : 'bg-transparent border-black/10 text-gray-500 hover:border-[#D4AF37] hover:text-[#D4AF37]'
               ]"
             >
               {{ cat }}
@@ -45,58 +47,76 @@
         </div>
       </div>
 
-      <div v-if="filteredProducts.length > 0" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-7">
+      <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
         <NuxtLink
           v-for="product in filteredProducts"
           :key="product.id"
-          :to="`/product/${product.documentId || product.id}`" 
-          class="group flex flex-col bg-white rounded-xl overflow-hidden border border-black/5 hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 cursor-pointer"
+          :to="`/product/${product.id}`" 
+          class="group relative flex flex-col bg-white rounded-[32px] p-3 border border-transparent hover:border-[#D4AF37]/20 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all duration-700"
         >
-          <div class="relative aspect-[4/5] bg-[#EDE9E0] overflow-hidden">
+          <div class="relative aspect-[1/1.2] rounded-[24px] overflow-hidden bg-[#F2F0EB]">
             <img
-              :src="product.image && product.image[0] ? `http://localhost:1337${product.image[0].url}` : '/placeholder.png'"
+              :src="getImageUrl(product.image)"
               :alt="product.name"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+              class="w-full h-full object-cover scale-[1.01] group-hover:scale-110 transition-transform duration-1000 ease-out"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pt-[50%]"></div>
             
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div class="flex items-center gap-2 bg-white/95 text-[#1A1A1A] px-5 py-2.5 rounded-full font-montserrat text-[10px] font-bold uppercase tracking-widest translate-y-3 group-hover:translate-y-0 transition-transform">
-                  <Icon name="lucide:eye" class="w-3 h-3" />
-                  <span>View Detail</span>
-                </div>
+            <div class="absolute top-4 left-4">
+               <span class="bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full font-montserrat text-[8px] font-bold uppercase tracking-tighter text-[#1A1A1A]">
+                 Artisan Choice
+               </span>
             </div>
 
-            <div class="absolute bottom-3 left-3 font-montserrat text-sm font-extrabold text-white tracking-tight drop-shadow-md">
-              PKR {{ product.price.toLocaleString() }}
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                <div class="flex flex-col items-center gap-3 translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
+                   <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                      <Icon name="lucide:arrow-right" class="w-5 h-5 text-[#1A1A1A]" />
+                   </div>
+                   <span class="text-white font-montserrat text-[10px] font-bold uppercase tracking-[0.2em]">View Details</span>
+                </div>
             </div>
           </div>
 
-          <div class="p-4 flex flex-col gap-1.5 flex-grow">
-            <div class="flex justify-between items-center">
-              <span class="font-montserrat text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Premium</span>
+          <div class="pt-6 pb-4 px-3 flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="font-montserrat text-[8px] font-bold tracking-[0.3em] uppercase text-[#D4AF37] mb-1 block">Zilber Premium</span>
+                <h3 class="font-cormorant text-2xl font-bold text-[#1A1A1A] leading-[1.1] group-hover:text-[#D4AF37] transition-colors">
+                  {{ product.name }}
+                </h3>
+              </div>
             </div>
-            <h3 class="font-cormorant italic text-base md:text-lg font-semibold text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors line-clamp-2">
-              {{ product.name }}
-            </h3>
-            <div class="flex items-center justify-between mt-auto pt-2.5 border-t border-black/5">
-              <span class="font-montserrat text-xs font-extrabold text-[#1A1A1A]">PKR {{ product.price.toLocaleString() }}</span>
-              <button @click.stop.prevent="handleAddToCart(product.id)" class="bg-[#1A1A1A] p-2 rounded-lg hover:bg-[#D4AF37] transition-colors">
-                 <Icon name="lucide:shopping-bag" class="w-4 h-4 text-white" />
+            
+            <div class="flex items-center justify-between mt-4">
+              <div class="flex flex-col">
+                <span class="font-montserrat text-[14px] font-black text-[#1A1A1A]">
+                   <span class="text-[10px] font-medium text-gray-400 mr-1">PKR</span>{{ Number(product.price).toLocaleString() }}
+                </span>
+              </div>
+              
+              <button 
+                @click.stop.prevent="handleAddToCart(product.id)" 
+                :class="[
+                  'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500',
+                  addedToCart.has(product.id) ? 'bg-green-500 rotate-[360deg]' : 'bg-[#1A1A1A] hover:bg-[#D4AF37] hover:shadow-lg'
+                ]"
+              >
+                 <Icon :name="addedToCart.has(product.id) ? 'lucide:check' : 'lucide:plus'" class="w-4 h-4 text-white" />
               </button>
             </div>
           </div>
         </NuxtLink>
       </div>
 
-      <div v-else class="py-20 text-center flex flex-col items-center gap-4">
-        <div class="w-18 h-18 rounded-full bg-black/5 flex items-center justify-center p-6">
-          <Icon name="lucide:search-x" class="w-8 h-8 text-gray-300" />
+      <div v-else class="py-32 text-center flex flex-col items-center">
+        <div class="relative mb-8">
+           <div class="absolute inset-0 bg-[#D4AF37]/10 blur-3xl rounded-full"></div>
+           <Icon name="lucide:search-x" class="relative w-16 h-16 text-gray-300" />
         </div>
-        <h3 class="font-cormorant text-2xl font-semibold text-[#1A1A1A]">No masterpieces found</h3>
-        <p class="font-montserrat text-xs text-gray-400">Try changing your filters or search query.</p>
-        <button @click="clearAll" class="mt-2 px-7 py-3 bg-[#1A1A1A] text-white rounded-lg font-montserrat text-[10px] font-bold tracking-widest uppercase hover:bg-[#D4AF37] transition-colors">
-          Reset All
+        <h3 class="font-cormorant text-3xl font-light italic text-[#1A1A1A] mb-2">The collection is currently empty</h3>
+        <p class="font-montserrat text-xs text-gray-400 tracking-widest uppercase mb-8">Refine your search for excellence</p>
+        <button @click="clearAll" class="px-10 py-4 bg-transparent border border-black/10 text-[#1A1A1A] rounded-full font-montserrat text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] hover:text-white transition-all">
+          Clear All Filters
         </button>
       </div>
 
@@ -113,13 +133,26 @@ const activeCategory = ref('All')
 const addedToCart = ref(new Set())
 const categories = ['All', 'Kaptan', 'Zalmi', 'Panjeedar', 'Exclusive']
 
+// Helper function to handle image URLs automatically
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return '/placeholder.png'
+  
+  // Agar path pehle se uploads/ se shuru ho raha hai
+  const baseUrl = 'http://localhost:5000/'
+  
+  // Kuch database entries me shayad 'uploads/' miss ho, ya double ho jaye
+  // Ye logic usay clean rakhta hai
+  const cleanPath = imagePath.replace(/^\/+/, '') // Remove leading slashes
+  return `${baseUrl}${cleanPath}`
+}
+
 const fetchProducts = async () => {
   try {
-    const response = await fetch('http://localhost:1337/api/shoes?populate=*')
+    const response = await fetch('http://localhost:5000/api/products')
     const result = await response.json()
-    allProducts.value = result.data 
+    allProducts.value = result
   } catch (error) {
-    console.error("Strapi error:", error)
+    console.error("Backend fetch error:", error)
   }
 }
 
@@ -131,8 +164,9 @@ const filteredProducts = computed(() =>
   allProducts.value.filter(p => {
     const q = searchQuery.value.trim().toLowerCase()
     const cat = activeCategory.value.toLowerCase()
-    const matchesSearch = !q || p.name.toLowerCase().includes(q)
-    const matchesCat = cat === 'all' || p.name.toLowerCase().includes(cat)
+    const nameMatch = p.name.toLowerCase()
+    const matchesSearch = !q || nameMatch.includes(q)
+    const matchesCat = cat === 'all' || nameMatch.includes(cat)
     return matchesSearch && matchesCat
   })
 )
@@ -147,3 +181,8 @@ const handleAddToCart = (id) => {
   setTimeout(() => addedToCart.value.delete(id), 2000)
 }
 </script>
+
+<style scoped>
+.font-cormorant { font-family: 'Cormorant Garamond', serif; }
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+</style>
