@@ -8,7 +8,7 @@
 
   <div v-else-if="product" class="min-h-screen bg-white mt-24 md:mt-32 pb-20">
     <div class="max-w-[1300px] mx-auto px-6 lg:px-12">
-      
+
       <nav class="flex items-center gap-2 text-[10px] uppercase tracking-[2px] text-gray-400 mb-10">
         <NuxtLink to="/" class="hover:text-black transition-colors">Home</NuxtLink>
         <span>/</span>
@@ -16,23 +16,23 @@
       </nav>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-        
+
+        <!-- Image -->
         <div class="lg:col-span-7">
           <div class="aspect-[3/4] bg-[#F7F7F7] overflow-hidden group rounded-xl border border-gray-100 shadow-sm">
-            <img 
-              :src="getImageUrl(product.image)" 
+            <img
+              :src="fullImageUrl"
               :alt="product.name"
-              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               @error="(e) => e.target.src = '/placeholder.png'"
             />
           </div>
         </div>
 
+        <!-- Details -->
         <div class="lg:col-span-5">
           <div class="lg:sticky lg:top-32">
-            <div class="mb-4">
-              <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37]">Pure Handcrafted Leather</span>
-            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37] block mb-4">Pure Handcrafted Leather</span>
 
             <h1 class="text-3xl md:text-4xl font-light text-[#1A1A1A] mb-4 tracking-tight uppercase font-serif italic">
               {{ product.name }}
@@ -44,52 +44,74 @@
 
             <div class="w-full h-[1px] bg-gray-100 mb-10"></div>
 
+            <!-- Size -->
             <div class="mb-8">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-[11px] font-bold uppercase tracking-widest">Size (UK)</h3>
                 <button class="text-[9px] underline text-gray-400 uppercase tracking-widest hover:text-black">Size Guide</button>
               </div>
               <div class="flex flex-wrap gap-2">
-                <button v-for="size in [6, 7, 8, 9, 10, 11, 12]" :key="size" 
+                <button
+                  v-for="size in [6, 7, 8, 9, 10, 11, 12]"
+                  :key="size"
                   @click="selectedSize = size"
                   class="w-[55px] h-[50px] border transition-all text-sm font-medium flex items-center justify-center rounded-sm"
-                  :class="selectedSize === size ? 'border-black bg-black text-white shadow-lg' : 'border-gray-200 text-gray-500 hover:border-black'">
+                  :class="selectedSize === size ? 'border-black bg-black text-white shadow-lg' : 'border-gray-200 text-gray-500 hover:border-black'"
+                >
                   {{ size }}
                 </button>
               </div>
+              <p v-if="sizeWarning" class="mt-2 font-montserrat text-[10px] text-red-400 font-bold tracking-widest uppercase animate-pulse">
+                Please select a size first!
+              </p>
             </div>
 
+            <!-- Quantity -->
             <div class="mb-10">
               <h3 class="text-[11px] font-bold uppercase tracking-widest mb-4">Quantity</h3>
               <div class="flex items-center w-max border border-gray-200 rounded-sm">
                 <button @click="qty > 1 ? qty-- : null" class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
                   <Icon name="lucide:minus" class="w-3.5 h-3.5" />
                 </button>
-                <span class="w-14 text-center font-medium text-sm border-x border-gray-200 h-12 flex items-center justify-center">
-                  {{ qty }}
-                </span>
+                <span class="w-14 text-center font-medium text-sm border-x border-gray-200 h-12 flex items-center justify-center">{{ qty }}</span>
                 <button @click="qty++" class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
                   <Icon name="lucide:plus" class="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
+            <!-- Buttons -->
             <div class="flex flex-col gap-3">
-              <button @click="handleAddToCart" 
-                class="relative w-full h-16 bg-black text-white uppercase text-[11px] font-bold tracking-[0.2em] overflow-hidden group transition-all active:scale-[0.98]">
+              <button
+                @click="handleAddToCart"
+                class="relative w-full h-16 bg-black text-white uppercase text-[11px] font-bold tracking-[0.2em] overflow-hidden transition-all active:scale-[0.98]"
+              >
                 <div v-if="!cartAdded" class="flex items-center justify-center gap-3">
                   <Icon name="lucide:shopping-bag" class="w-4 h-4" /> Add to Cart
                 </div>
-                <div v-else class="flex items-center justify-center gap-3 bg-emerald-700 w-full h-full absolute inset-0">
-                  <Icon name="lucide:check" class="w-4 h-4" /> Item Added
+                <div v-else class="absolute inset-0 bg-emerald-700 flex items-center justify-center gap-3">
+                  <Icon name="lucide:check" class="w-4 h-4" /> Item Added!
                 </div>
               </button>
 
-              <button @click="orderOnWhatsApp" 
-                class="w-full h-16 border border-gray-200 flex items-center justify-center gap-3 uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-gray-50 transition-all active:scale-[0.98]">
+              <button
+                @click="orderOnWhatsApp"
+                class="w-full h-16 border border-gray-200 flex items-center justify-center gap-3 uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-gray-50 transition-all active:scale-[0.98]"
+              >
                 <Icon name="logos:whatsapp-icon" class="text-xl" /> Order via WhatsApp
               </button>
             </div>
+
+            <!-- Cart success toast -->
+            <transition name="toast">
+              <div v-if="cartAdded" class="mt-4 flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <p class="font-montserrat text-[10px] font-bold text-emerald-700 uppercase tracking-widest">
+                  Added to cart —
+                  <NuxtLink to="/cart" class="underline">View Cart</NuxtLink>
+                </p>
+              </div>
+            </transition>
 
             <div class="mt-12 pt-8 border-t border-gray-100">
               <h3 class="text-[11px] font-bold uppercase tracking-widest mb-4">Product Details</h3>
@@ -97,6 +119,7 @@
                 {{ product.description || 'This exclusive Zilber piece is handcrafted with the finest materials, ensuring both luxury and durability for any occasion.' }}
               </p>
             </div>
+
           </div>
         </div>
       </div>
@@ -112,67 +135,86 @@
 </template>
 
 <script setup>
-// Props/Route setup
+import { useCartStore } from '~/stores/cart'
+
 const route = useRoute()
+const cartStore = useCartStore()
 const selectedSize = ref(null)
 const qty = ref(1)
 const cartAdded = ref(false)
+const sizeWarning = ref(false)
 
-// 1. Fetching from your NEW Node.js Backend (Port 5000)
-// useFetch automatically handles the async state
-const { data: product, pending, error } = await useFetch(`http://localhost:5000/api/products/${route.params.id}`)
+const { data: product, pending } = await useFetch(`http://localhost:5000/api/products/${route.params.id}`)
 
-// 2. Image URL Helper (Matches your Admin Dashboard logic)
-const getImageUrl = (path) => {
-  if (!path) return '/placeholder.png'
-  // Check if it's already a full URL or needs the backend prefix
-  return path.startsWith('http') ? path : `http://localhost:5000/${path.replace(/^\/+/, '')}`
-}
+// Full image URL — yahi cart mein pass hogi
+const fullImageUrl = computed(() => {
+  if (!product.value?.image) return '/placeholder.png'
+  if (product.value.image.startsWith('http')) return product.value.image
+  return `http://localhost:5000/${product.value.image.replace(/^\/+/, '')}`
+})
 
-// 3. Add to Cart Logic
 const handleAddToCart = () => {
   if (!selectedSize.value) {
-    alert('Please select your UK size before adding to cart.')
+    sizeWarning.value = true
+    setTimeout(() => sizeWarning.value = false, 2000)
     return
   }
-  
-  // Yahan aap apna Pinia store call kar saktay hain:
-  // cartStore.addItem({ ...product.value, size: selectedSize.value, quantity: qty.value })
-  
+  // Full image URL ke saath cart mein add karo
+  cartStore.addToCart({
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    description: product.value.description,
+    image: fullImageUrl.value  // ← Full URL pass ho rahi hai
+  }, selectedSize.value, qty.value)
+
   cartAdded.value = true
-  setTimeout(() => {
-    cartAdded.value = false
-  }, 2000)
+  setTimeout(() => cartAdded.value = false, 3000)
 }
 
-// 4. WhatsApp Order Logic
 const orderOnWhatsApp = () => {
   if (!selectedSize.value) {
-    alert('Please select a size first.')
+    sizeWarning.value = true
+    setTimeout(() => sizeWarning.value = false, 2000)
     return
   }
-  
   const totalPrice = Number(product.value.price) * qty.value
-  const message = `*New Order from Zilber Web*%0A%0A` +
-                  `*Product:* ${product.value.name}%0A` +
-                  `*Size:* UK-${selectedSize.value}%0A` +
-                  `*Quantity:* ${qty.value}%0A` +
-                  `*Price:* Rs. ${totalPrice.toLocaleString()}%0A%0A` +
-                  `Please confirm my order. Thank you!`
-  
-  const whatsappNumber = "923001234567" // Apna number yahan add karein
-  window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank')
+  const message =
+    `🛍️ *NEW ZILBER ORDER*\n\n` +
+    `👤 *Customer Order*\n` +
+    `Product: ${product.value.name}\n` +
+    `Size: UK-${selectedSize.value}\n` +
+    `Quantity: ${qty.value}\n` +
+    `Price: Rs. ${totalPrice.toLocaleString()}\n` +
+    `Image: ${fullImageUrl.value}\n\n` +
+    `_Please confirm my order. Thank you!_`
+
+  window.open(`https://wa.me/923149535884?text=${encodeURIComponent(message)}`, '_blank')
 }
+
+onMounted(() => cartStore.loadFromStorage())
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,600&family=Montserrat:wght@300;400;700;900&display=swap');
-
-.font-serif {
-  font-family: 'Cormorant Garamond', serif;
-}
-
-.font-montserrat {
-  font-family: 'Montserrat', sans-serif;
-}
+.font-serif { font-family: 'Cormorant Garamond', serif; }
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(-8px); }
 </style>
+```
+
+---
+
+## Image Flow Summary: ✅
+```
+Database (URL stored)
+    ↓ getImageUrl() → Full URL banta hai
+Product Listing Page
+    ↓ fullImageUrl pass hoti hai cart mein
+Product Detail Page
+    ↓ image: fullImageUrl.value
+Cart Store (localStorage)
+    ↓ item.image = full URL
+Cart Page → image dikhti hai ✅
+Checkout Page → image dikhti hai ✅
+WhatsApp message → image URL jata hai ✅
