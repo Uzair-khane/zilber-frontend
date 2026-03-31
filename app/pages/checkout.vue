@@ -155,7 +155,7 @@
 import { useCartStore } from '~/stores/cart'
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
-const API_URL = config.public.apiUrl
+const API_URL = config.public.apiUrl ?? 'http://localhost:5000'
 
 const form = ref({ name: '', phone: '', city: '', address: '' })
 const isProcessing = ref(false)
@@ -174,14 +174,12 @@ const validateForm = () => {
   return true
 }
 
-// Main function — DB mein save karo + WhatsApp/Email bhejo
 const placeOrder = async (method) => {
   if (!validateForm()) return
   isProcessing.value = true
 
   try {
-    // 1. Pehle DB mein save karo
-    const res = await $fetch(`${API_URL}/api/orders`, {
+    const res = await $fetch(API_URL + '/api/orders', {
       method: 'POST',
       body: {
         customer: form.value,
@@ -193,12 +191,10 @@ const placeOrder = async (method) => {
     orderId.value = res.orderId
     orderSuccess.value = true
 
-    // 2. WhatsApp ya Email bhejo
     if (method === 'whatsapp') {
       sendToWhatsApp()
     }
 
-    // 3. Cart clear karo
     setTimeout(() => {
       cartStore.items = []
       cartStore.saveToStorage()
@@ -214,24 +210,40 @@ const placeOrder = async (method) => {
 }
 
 const sendToWhatsApp = () => {
-  const itemsText = cartStore.items.map(item =>
-    `• *${item.name}*\n  Size: UK-${item.size || 'N/A'} | Qty: ${item.quantity} | Rs. ${(item.price * item.quantity).toLocaleString()}`
-  ).join('\n\n')
+  const itemsText = cartStore.items.map((item, index) => {
+    const price = (item.price * item.quantity).toLocaleString()
+    const size = item.size || 'N/A'
+    return (
+      (index + 1) + '. *' + item.name + '*\n' +
+      '   - Size: UK-' + size + '\n' +
+      '   - Quantity: ' + item.quantity + '\n' +
+      '   - Price: Rs. ' + price
+    )
+  }).join('\n\n')
 
-  const message =
-    `🛍️ *NEW ZILBER ORDER #${orderId.value}*\n\n` +
-    `👤 *Customer Details*\n` +
-    `Name: ${form.value.name}\n` +
-    `Phone: ${form.value.phone}\n` +
-    `City: ${form.value.city}\n` +
-    `Address: ${form.value.address}\n\n` +
-    `📦 *Order Items*\n${itemsText}\n\n` +
-    `💰 *Grand Total: Rs. ${cartStore.totalPrice.toLocaleString()}*\n` +
-    `🚚 Shipping: FREE\n` +
-    `💵 Payment: Cash on Delivery\n\n` +
-    `_Please confirm this order. Thank you!_`
+  const total = cartStore.totalPrice.toLocaleString()
+  const date = new Date().toLocaleDateString('en-PK', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  })
 
-  window.open(`https://wa.me/923149535884?text=${encodeURIComponent(message)}`, '_blank')
+  const message = (
+    'Salam Zilber! I have placed a new order.\n\n' +
+    '*NEW ZILBER ORDER #' + orderId.value + '*\n\n' +
+    '*Customer Details*\n' +
+    'Name: ' + form.value.name + '\n' +
+    'Phone: ' + form.value.phone + '\n' +
+    'City: ' + form.value.city + '\n' +
+    'Address: ' + form.value.address + '\n' +
+    'Date: ' + date + '\n\n' +
+    '*Order Items*\n\n' +
+    itemsText + '\n\n' +
+    '*Grand Total: Rs. ' + total + '*\n' +
+    'Shipping: FREE\n' +
+    'Payment: Cash on Delivery\n\n' +
+    '_Please confirm this order. JazakAllah!_'
+  )
+
+  window.open('https://wa.me/923149535884?text=' + encodeURIComponent(message), '_blank')
 }
 
 useHead({ title: 'Checkout | Zilber Luxury Footwear' })
@@ -249,3 +261,27 @@ useHead({ title: 'Checkout | Zilber Luxury Footwear' })
 .custom-scrollbar::-webkit-scrollbar { width: 2px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
 </style>
+```
+
+WhatsApp message aisa dikhega:
+```
+Salam Zilber! I have placed a new order.
+
+*NEW ZILBER ORDER #1*
+
+*Customer Details*
+Name: Uzair Khan
+Phone: 03149535884
+City: Peshawar
+Address: Street 5, Phase 2
+Date: 31 March 2026
+
+*Order Items*
+1. *Zalmi Premium*
+   Size: UK-9  |  Qty: 2  |  Rs. 19,998
+
+*Grand Total: Rs. 19,998*
+Shipping: FREE
+Payment: Cash on Delivery
+
+_Please confirm this order. JazakAllah!_
