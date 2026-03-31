@@ -71,20 +71,20 @@
           class="w-full pb-20 custom-swiper"
         >
           <SwiperSlide v-for="i in 6" :key="i">
-            <div class="group relative bg-white p-4 shadow-sm hover:shadow-2xl transition-all duration-500">
+            <div class="group relati shadow-sm hover:shadow-2xl transition-all duration-500">
               <div class="relative overflow-hidden aspect-[3/4] mb-6">
                 <img src="../assets/images/heroimage.png" alt="Product" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 <div class="absolute top-4 left-4 bg-gold text-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-tighter">New Arrival</div>
                 
-                <div class="absolute inset-0 bg-charcoal/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-4">
+                <!-- <div class="absolute inset-0 bg-charcoal/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-4">
                   <button class="bg-white text-charcoal px-8 py-3 uppercase tracking-widest text-xs font-bold hover:bg-gold transition-colors">Select Size</button>
                   <button class="bg-gold text-charcoal p-3 hover:bg-white transition-colors"><Icon name="lucide:shopping-bag" /></button>
-                </div>
+                </div> -->
               </div>
-              <div class="text-center">
+              <!-- <div class="text-center">
                 <h3 class="font-serif text-xl text-charcoal mb-2">Premium Kaptan Edition</h3>
                 <p class="text-gold font-black tracking-widest uppercase text-sm italic">PKR 8,500</p>
-              </div>
+              </div> -->
             </div>
           </SwiperSlide>
         </Swiper>

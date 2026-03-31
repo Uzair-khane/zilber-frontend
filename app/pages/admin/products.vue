@@ -38,7 +38,7 @@
             <div class="w-full h-full rounded-full bg-[#0F0F0F] flex items-center justify-center font-bold text-[#D4AF37] text-[10px]">A</div>
           </div>
           <div class="flex-1 min-w-0">
-            <p class="font-montserrat text-[9px] font-bold text-white truncate">ARZOO Admin</p>
+            <p class="font-montserrat text-[9px] font-bold text-white truncate">Uzair  Admin</p>
             <p class="font-montserrat text-[7px] text-white/30 truncate uppercase">Verified Master</p>
           </div>
           <button @click="logout" class="hover:text-red-400 transition-colors text-white/20">
