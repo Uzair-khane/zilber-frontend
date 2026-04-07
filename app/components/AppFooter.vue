@@ -1,78 +1,82 @@
 <template>
-  <footer class="bg-[#1A1A1A] text-[#F7F4EF] pt-16 pb-10">
-
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
-
-      <!-- Brand -->
-      <div>
-        <h2 class="text-2xl tracking-[0.3em] text-[#D4AF37] font-semibold mb-4">
-          ZILBER
-        </h2>
-
-        <p class="text-sm text-gray-400 leading-relaxed mb-6">
-          Authentic handcrafted Charsadda Chappals — jahan riwayat milti hai modern comfort se.
+  <footer class="bg-[#FAF9F6] text-[#1A1A1A] pt-14 pb-5 border-t border-black/5 font-sans">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+      
+      <div class="flex flex-col gap-5 lg:-mt-10">
+        <div class="w-32 transition-transform duration-500 hover:scale-105">
+          <img src="../assets/images/logo1.png" alt="Zilber Logo" class="w-full h-auto brightness-0 -ml-8" />
+        </div>
+        <p class="text-[13px] text-gray-500 leading-relaxed ">
+          Authentic handcrafted Charsadda Chappals jahan riwayat milti hai modern comfort se.
         </p>
 
-        <!-- Social Icons -->
-        <div class="flex gap-4">
-          <a href="#" class="social-icon">
-            <Icon name="mdi:facebook" />
+        <div class="flex gap-3 mt-2">
+          <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-black/10 text-[#1A1A1A] transition-all duration-300 hover:-translate-y-1 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white hover:shadow-lg">
+            <Icon name="mdi:facebook" class="w-5 h-5" />
           </a>
-          <a href="#" class="social-icon">
-            <Icon name="mdi:instagram" />
+          <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-black/10 text-[#1A1A1A] transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:border-transparent hover:text-white hover:shadow-lg">
+            <Icon name="mdi:instagram" class="w-5 h-5" />
           </a>
-          <a href="#" class="social-icon">
-            <Icon name="ic:baseline-tiktok" />
+          <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-black/10 text-[#1A1A1A] transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:border-black hover:text-white hover:shadow-lg">
+            <Icon name="ic:baseline-tiktok" class="w-5 h-5" />
           </a>
-          <a href="#" class="social-icon whatsapp">
-            <Icon name="mdi:whatsapp" />
+          <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full border border-black/10 text-[#1A1A1A] transition-all duration-300 hover:-translate-y-1 hover:bg-[#25D366] hover:border-[#25D366] hover:text-white hover:shadow-lg">
+            <Icon name="mdi:whatsapp" class="w-5 h-5" />
           </a>
         </div>
       </div>
 
-      <!-- Quick Links -->
       <div>
-        <h3 class="footer-title">Quick Links</h3>
-        <ul class="footer-links">
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/collections/kaptan">Kaptan</NuxtLink></li>
-          <li><NuxtLink to="/collections/zalmi">Zalmi</NuxtLink></li>
-          <li><NuxtLink to="/collections/new-arrivals">New Arrivals</NuxtLink></li>
+        <h3 class="text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] mb-6 font-extrabold">Collections</h3>
+        <ul class="flex flex-col gap-3">
+          <li v-for="link in ['Home', 'Kaptan Edition', 'Zalmi Series', 'New Arrivals']" :key="link">
+            <NuxtLink to="#" class="relative text-[14px] text-gray-500 hover:text-black transition-colors duration-300 group inline-block">
+              {{ link }}
+              <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-black transition-all duration-300 group-hover:w-full"></span>
+            </NuxtLink>
+          </li>
         </ul>
       </div>
 
-      <!-- Help -->
       <div>
-        <h3 class="footer-title">Customer Care</h3>
-        <ul class="footer-links">
-          <li><NuxtLink to="/contact">Contact Us</NuxtLink></li>
-          <li><NuxtLink to="/shipping">Shipping Info</NuxtLink></li>
-          <li><NuxtLink to="/returns">Returns</NuxtLink></li>
-          <li><NuxtLink to="/faq">FAQ</NuxtLink></li>
+        <h3 class="text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] mb-6 font-extrabold">Customer Care</h3>
+        <ul class="flex flex-col gap-3">
+          <li v-for="link in ['Track Order', 'Shipping Policy', 'FAQ']" :key="link">
+            <NuxtLink to="#" class="relative text-[14px] text-gray-500 hover:text-black transition-colors duration-300 group inline-block">
+              {{ link }}
+              <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-black transition-all duration-300 group-hover:w-full"></span>
+            </NuxtLink>
+          </li>
         </ul>
       </div>
 
-      <!-- WhatsApp CTA -->
-      <div>
-        <h3 class="footer-title">Need Help?</h3>
-
-        <p class="text-sm text-gray-400 mb-4">
-          Order directly on WhatsApp for quick support and fast checkout.
+      <div class="flex flex-col gap-4">
+        <h3 class="text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] mb-6 font-extrabold">Direct Support</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed">
+          Quick support aur fast checkout ke liye humein WhatsApp par message karein.
         </p>
-
-        <button class="whatsapp-btn" @click="openWhatsApp">
+        <button 
+          @click="openWhatsApp" 
+          class="flex items-center justify-center gap-2 bg-[#11ee80] text-white py-3.5 px-6 rounded-[2px] text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:bg-[#25D366] hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(37,211,102,0.2)] active:scale-95"
+        >
           <Icon name="mdi:whatsapp" class="w-5 h-5" />
-          Chat on WhatsApp
+          Order on WhatsApp
         </button>
       </div>
 
     </div>
 
-    <!-- Bottom -->
-    <div class="max-w-7xl mx-auto px-4 mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-      © {{ new Date().getFullYear() }} Zilber Footwear. All Rights Reserved.
+    <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-black/[0.05]">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-[10px] uppercase text-center tracking-[0.2em] text-gray-400 font-medium">
+          © {{ new Date().getFullYear() }} Zilber Footwear. All Rights Reserved.
+        </p>
+        <div class="flex gap-6 text-[10px] uppercase tracking-widest text-gray-400">
+          <a href="#" class="hover:text-black transition-colors duration-300">Privacy</a>
+          <a href="#" class="hover:text-black transition-colors duration-300">Terms</a>
+        </div>
+      </div>
     </div>
-
   </footer>
 </template>
 
@@ -82,82 +86,3 @@ const openWhatsApp = () => {
   window.open(`https://wa.me/923001234567?text=${msg}`, '_blank')
 }
 </script>
-
-<style scoped>
-
-/* Titles */
-.footer-title {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #D4AF37;
-  margin-bottom: 16px;
-  font-weight: 700;
-}
-
-/* Links */
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footer-links a {
-  font-size: 13px;
-  color: #bbb;
-  transition: all 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: #D4AF37;
-  transform: translateX(4px);
-}
-
-/* Social Icons */
-.social-icon {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 50%;
-  color: #bbb;
-  transition: all 0.3s ease;
-}
-
-.social-icon:hover {
-  color: #D4AF37;
-  border-color: #D4AF37;
-  transform: translateY(-3px);
-}
-
-/* WhatsApp special */
-.whatsapp:hover {
-  color: #25D366 !important;
-  border-color: #25D366 !important;
-}
-
-/* WhatsApp Button */
-.whatsapp-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #25D366;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.whatsapp-btn:hover {
-  background: #128C7E;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37,211,102,0.3);
-}
-
-</style>

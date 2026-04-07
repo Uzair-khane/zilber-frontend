@@ -7,7 +7,7 @@
         Testimonials
       </p>
 
-      <h2 class="text-3xl md:text-5xl font-serif italic text-gray-900">
+      <h2 class="text-3xl md:text-5xl font-serif  text-gray-900">
         What Our Customers Say
       </h2>
 

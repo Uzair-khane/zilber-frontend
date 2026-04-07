@@ -1,43 +1,44 @@
 <template>
-  <div class="page-wrap bg-[#F7F4EF] min-h-screen py-[52px] pb-24">
-    <div class="container max-w-[1400px] mx-auto px-4 md:px-8 lg:px-[56px]">
+  <div class="page-wrap bg-[#FAF9F6] min-h-screen py-16 pb-32">
+    <div class="container max-w-[1600px] mx-auto px-4 md:px-12 lg:px-20">
 
-      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-8 mb-12">
+      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-12 mb-20 border-b border-black/5 pb-12">
         <div class="header-left">
-          <p class="font-montserrat text-[10px] font-bold tracking-[0.4em] uppercase text-[#D4AF37] mb-3">
-            Handcrafted in Pakistan
+          <p class="font-montserrat text-[11px] font-black tracking-[0.5em] uppercase text-slate-800 mb-4">
+            Legacy of Peshawar
           </p>
-          <h2 class="font-cormorant italic font-semibold text-[clamp(48px,8vw,80px)] text-[#1A1A1A] tracking-tighter leading-[0.9] mb-4">
+          <h2 class=" font-medium text-2xl md:text-5xl text-[#1A1A1A] tracking-tighter leading-none mb-6">
             The Archive
           </h2>
-          <div class="flex items-center gap-3">
-            <span class="h-[1px] w-8 bg-[#D4AF37]"></span>
-            <p class="font-montserrat text-[11px] font-medium tracking-widest uppercase text-gray-500">
-              Showing <span class="text-[#1A1A1A] font-bold">{{ filteredProducts.length }}</span> Curated Pieces
+          <div class="flex items-center gap-4">
+            <span class="h-[1px] w-12 bg-[#202020]"></span>
+            <p class="font-montserrat text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">
+              Discovering <span class="text-[#1A1A1A]">{{ filteredProducts.length }}</span> Masterpieces
             </p>
           </div>
         </div>
 
-        <div class="flex flex-col items-end gap-5 w-full lg:w-auto lg:min-w-[400px]">
-          <div class="relative w-full">
-            <Icon name="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <div class="flex flex-col items-end gap-8 w-full lg:w-auto">
+          <div class="relative w-full lg:w-[450px] group">
+            <Icon name="lucide:search" class="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-[#4b4b4b] transition-colors" />
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Search by name or style..."
-              class="w-full bg-white border border-black/5 rounded-full py-4 px-12 font-montserrat text-[13px] text-[#1A1A1A] shadow-sm outline-none focus:ring-2 focus:ring-[#D4AF37]/20 transition-all placeholder:text-gray-300"
+              placeholder="SEARCH BY NAME OR STYLE..."
+              class="w-full bg-transparent border-b border-black/10 py-4 pl-8 pr-4 font-montserrat text-[12px] tracking-widest text-[#1A1A1A] outline-none focus:border-[#535353] transition-all placeholder:text-gray-300 uppercase"
             />
           </div>
-          <div class="flex flex-wrap justify-end gap-2">
+
+          <div class="flex flex-wrap justify-end gap-3">
             <button
               v-for="cat in categories"
               :key="cat"
               @click="activeCategory = cat"
               :class="[
-                'px-5 py-2.5 rounded-full font-montserrat text-[9px] font-bold tracking-[0.15em] uppercase border transition-all',
+                'px-6 py-2 font-montserrat text-[10px] font-black tracking-[0.2em] uppercase transition-all duration-300 border',
                 activeCategory === cat
-                  ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-xl translate-y-[-2px]'
-                  : 'bg-transparent border-black/10 text-gray-500 hover:border-[#D4AF37] hover:text-[#D4AF37]'
+                  ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-2xl scale-105'
+                  : 'bg-transparent border-black/5 text-gray-400 hover:border-[#D4AF37] hover:text-[#D4AF37]'
               ]"
             >
               {{ cat }}
@@ -46,74 +47,72 @@
         </div>
       </div>
 
-      <!-- Products Grid -->
-      <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+      <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-20">
         <div
           v-for="product in filteredProducts"
           :key="product.id"
-          class="group relative flex flex-col bg-white rounded-[32px] p-3 border border-transparent hover:border-[#D4AF37]/20 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all duration-700"
+          class="group relative flex flex-col bg-transparent transition-all duration-700"
         >
-          <NuxtLink :to="`/product/${product.id}`" class="block">
-            <div class="relative aspect-[1/1.2] rounded-[24px] overflow-hidden bg-[#F2F0EB]">
-              <img
-                :src="getImageUrl(product.image)"
-                :alt="product.name"
-                class="w-full h-full object-cover scale-[1.01] group-hover:scale-110 transition-transform duration-1000 ease-out"
-              />
-              <div class="absolute top-4 left-4">
-                <span class="bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full font-montserrat text-[8px] font-bold uppercase tracking-tighter text-[#1A1A1A]">
-                  Artisan Choice
-                </span>
-              </div>
-              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                <div class="flex flex-col items-center gap-3 translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
-                  <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                    <Icon name="lucide:arrow-right" class="w-5 h-5 text-[#1A1A1A]" />
-                  </div>
-                  <span class="text-white font-montserrat text-[10px] font-bold uppercase tracking-[0.2em]">View Details</span>
+          <NuxtLink :to="`/product/${product.id}`" class="block overflow-hidden relative aspect-[4/5] bg-[#F2F0EB]">
+            <img
+              :src="getImageUrl(product.image)"
+              :alt="product.name"
+              class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+            />
+            
+            <div class="absolute top-6 left-6">
+              <span class="bg-gray-100 text-slate-700 rounded-md px-2 py-1 font-montserrat text-[9px] font-bold uppercase tracking-[0.2em]">
+                Avilable
+              </span>
+            </div>
+
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-8">
+              <div class="w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                <div class="bg-white py-4 text-center text-black font-montserrat text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl">
+                  View Detail
                 </div>
               </div>
             </div>
           </NuxtLink>
 
-          <div class="pt-6 pb-4 px-3 flex flex-col gap-2">
-            <div>
-              <span class="font-montserrat text-[8px] font-bold tracking-[0.3em] uppercase text-[#D4AF37] mb-1 block">Zilber Premium</span>
-              <NuxtLink :to="`/product/${product.id}`">
-                <h3 class="font-cormorant text-2xl font-bold text-[#1A1A1A] leading-[1.1] group-hover:text-[#D4AF37] transition-colors">
-                  {{ product.name }}
-                </h3>
-              </NuxtLink>
-            </div>
-            <div class="flex items-center justify-between mt-4">
-              <span class="font-montserrat text-[14px] font-black text-[#1A1A1A]">
-                <span class="text-[10px] font-medium text-gray-400 mr-1">PKR</span>{{ Number(product.price).toLocaleString() }}
-              </span>
+          <div class=" px-1 py-5 shadow-sm flex flex-col gap-4">
+            <div class="flex justify-between items-start">
+              <div class="flex flex-col gap-1">
+                <NuxtLink :to="`/product/${product.id}`">
+                  <h3 class=" px-2 text-1xl font-semibold font-sans text-[#1A1A1A] group-hover:text-[#424242] transition-colors leading-tight">
+                    {{ product.name }}
+                  </h3>
+                </NuxtLink>
+              </div>
+              
               <button
                 @click.stop.prevent="handleAddToCart(product)"
                 :class="[
-                  'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500',
+                  ' px-3 flex items-center justify-center transition-all duration-500 ',
                   addedToCart.has(product.id)
-                    ? 'bg-green-500 rotate-[360deg]'
-                    : 'bg-[#1A1A1A] hover:bg-[#D4AF37] hover:shadow-lg'
+                    ? ' border-green-600 text-green-500'
+                    : 'bg-transparent border-black/10 hover:text-yellow-600'
                 ]"
               >
-                <Icon :name="addedToCart.has(product.id) ? 'lucide:check' : 'lucide:plus'" class="w-4 h-4 text-white" />
+                <Icon :name="addedToCart.has(product.id) ? 'lucide:check' : 'lucide:shopping-cart'" class="w-5 h-5" />
               </button>
+            </div>
+
+            <div class="flex items-center ">
+              <span class="w-2 bg-black/10"></span>
+              <span class="font-montserrat text-[16px] font-bold text-[#1A1A1A] tracking-tighter">
+                <span class="text-[13px] font-medium text-slate-600 mr-1 uppercase">Rs.</span>{{ Number(product.price).toLocaleString() }}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Empty State -->
-      <div v-else class="py-32 text-center flex flex-col items-center">
-        <div class="relative mb-8">
-          <div class="absolute inset-0 bg-[#D4AF37]/10 blur-3xl rounded-full"></div>
-          <Icon name="lucide:search-x" class="relative w-16 h-16 text-gray-300" />
-        </div>
-        <h3 class="font-cormorant text-3xl font-light italic text-[#1A1A1A] mb-2">The collection is currently empty</h3>
-        <p class="font-montserrat text-xs text-gray-400 tracking-widest uppercase mb-8">Refine your search for excellence</p>
-        <button @click="clearAll" class="px-10 py-4 bg-transparent border border-black/10 text-[#1A1A1A] rounded-full font-montserrat text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] hover:text-white transition-all">
+      <div v-else class="py-40 text-center flex flex-col items-center border border-dashed border-black/10">
+        <Icon name="lucide:layers" class="w-12 h-12 text-gray-200 mb-6" />
+        <h3 class="font-serif italic text-4xl text-[#1A1A1A] mb-4">No matching articles found</h3>
+        <p class="font-montserrat text-[10px] text-gray-400 tracking-[0.3em] uppercase mb-10">Refine your criteria for luxury</p>
+        <button @click="clearAll" class="px-12 py-4 bg-black text-white font-montserrat text-[10px] font-black tracking-[0.3em] uppercase hover:bg-[#D4AF37] transition-all">
           Clear All Filters
         </button>
       </div>
@@ -133,7 +132,7 @@ const activeCategory = ref('All')
 const addedToCart = ref(new Set())
 const categories = ['All', 'Kaptan', 'Zalmi', 'Panjeedar', 'Exclusive']
 
-// Image URL helper — full URL return karta hai
+// Logic remains identical to your original code
 const getImageUrl = (imagePath) => {
   if (!imagePath) return '/placeholder.png'
   if (imagePath.startsWith('http')) return imagePath
@@ -151,7 +150,6 @@ const fetchProducts = async () => {
 }
 
 const handleAddToCart = (product) => {
-  // Full image URL pass karo cart mein
   const productWithFullImage = {
     ...product,
     image: getImageUrl(product.image)
@@ -186,6 +184,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.font-cormorant { font-family: 'Cormorant Garamond', serif; }
+/* Nuxt/Tailwind handles fonts, but explicit override for premium feel */
+.font-serif { font-family: 'Cormorant Garamond', serif; }
 .font-montserrat { font-family: 'Montserrat', sans-serif; }
 </style>
