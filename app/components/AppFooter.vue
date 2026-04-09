@@ -57,7 +57,7 @@
         </p>
         <button 
           @click="openWhatsApp" 
-          class="flex items-center justify-center gap-2 bg-[#11ee80] text-white py-3.5 px-6 rounded-[2px] text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:bg-[#25D366] hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(37,211,102,0.2)] active:scale-95"
+          class="flex items-center justify-center gap-2 bg-[#10db76] text-white py-3.5 px-6 rounded-[2px] text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:bg-[#25D366] hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(37,211,102,0.2)] active:scale-95"
         >
           <Icon name="mdi:whatsapp" class="w-5 h-5" />
           Order on WhatsApp
