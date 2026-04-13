@@ -151,7 +151,7 @@
 import { useCartStore } from '~/stores/cart'
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
-const API_URL = config.public.apiUrl ?? 'http://localhost:5000'
+const API_URL = config.public.apiUrl ?? 'http://72.61.124.30/api2'
 
 const form = ref({ name: '', phone: '', city: '', address: '' })
 const isProcessing = ref(false)

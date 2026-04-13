@@ -38,7 +38,7 @@
             <div class="w-full h-full rounded-full bg-[#0F0F0F] flex items-center justify-center font-bold text-[#D4AF37] text-[10px]">A</div>
           </div>
           <div class="flex-1 min-w-0">
-            <p class="font-montserrat text-[9px] font-bold text-white truncate">Uzair  Admin</p>
+            <p class="font-montserrat text-[9px] font-bold text-white truncate">Uzair Admin</p>
             <p class="font-montserrat text-[7px] text-white/30 truncate uppercase">Verified Master</p>
           </div>
           <button @click="logout" class="hover:text-red-400 transition-colors text-white/20">
@@ -256,6 +256,10 @@ import { ref, computed, onMounted } from 'vue'
 
 definePageMeta({ middleware: 'admin', layout: 'blank' })
 
+// ✅ Live API URL
+const config = useRuntimeConfig()
+const API_URL = config.public.apiUrl ?? 'http://72.61.124.30/api2'
+
 // STATE
 const products = ref([])
 const orders = ref([])
@@ -272,32 +276,42 @@ const form = ref({ name: '', price: '', image: '', description: '' })
 
 // HELPERS
 const token = () => localStorage.getItem('admin_token')
+
+
 const getImageUrl = (path) => {
   if (!path) return '/placeholder.png'
-  return path.startsWith('http') ? path : `http://localhost:5000/${path.replace(/^\/+/, '')}`
+  if (path.startsWith('http')) return path
+  const baseUrl = config.public.apiUrl.replace(/\/$/, '')
+  const cleanPath = path.replace(/^\/+/, '')
+  if (!cleanPath.startsWith('uploads/')) {
+    return `${baseUrl}uploads/${cleanPath}`
+  }
+
+  return `${baseUrl}/${cleanPath}`
 }
 
-// FETCH DATA
+//  Products live se fetch karo
 const fetchProducts = async () => {
-  try { products.value = await $fetch('http://localhost:5000/api/products') } 
-  catch (err) { console.error("Product fetch failed", err) }
+  try { products.value = await $fetch(API_URL + 'api/products') }
+  catch (err) { console.error('Product fetch failed', err) }
 }
 
+//  Orders live se fetch karo
 const fetchOrders = async () => {
   try {
-    orders.value = await $fetch('http://localhost:5000/api/orders', {
-      headers: { Authorization: `Bearer ${token()}` }
+    orders.value = await $fetch(API_URL + 'api/orders', {
+      headers: { Authorization: 'Bearer ' + token() }
     })
-  } catch (err) { console.error("Order fetch failed", err) }
+  } catch (err) { console.error('Order fetch failed', err) }
 }
 
-// LOGOUT LOGIC (RE-ADDED)
+// LOGOUT
 const logout = () => {
   localStorage.removeItem('admin_token')
-  window.location.href = '/admin/login' // Ya jo bhi aapka login route hai
+  window.location.href = '/admin/login'
 }
 
-// PRODUCT ACTIONS
+//  Product save — live server pe
 const saveProduct = async () => {
   if (!form.value.name || !form.value.price) {
     formMsg.value = { text: 'Identity and Valuation are required.', type: 'error' }
@@ -312,13 +326,15 @@ const saveProduct = async () => {
   else if (editMode.value) formData.append('image', form.value.image)
 
   try {
-    const url = editMode.value ? `http://localhost:5000/api/products/${editId.value}` : 'http://localhost:5000/api/products'
+    const url = editMode.value
+      ? API_URL + 'api/products/' + editId.value
+      : API_URL + 'api/products'
     await $fetch(url, {
       method: editMode.value ? 'PUT' : 'POST',
-      headers: { Authorization: `Bearer ${token()}` },
+      headers: { Authorization: 'Bearer ' + token() },
       body: formData
     })
-    formMsg.value = { text: `Item ${editMode.value ? 'Updated' : 'Created'} Successfully!`, type: 'success' }
+    formMsg.value = { text: 'Item ' + (editMode.value ? 'Updated' : 'Created') + ' Successfully!', type: 'success' }
     setTimeout(() => {
       fetchProducts()
       activeTab.value = 'products'
@@ -331,21 +347,22 @@ const saveProduct = async () => {
   }
 }
 
-// ORDER ACTIONS
+//  Order status update — live
 const updateStatus = async (orderId, status) => {
-  await $fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+  await $fetch(API_URL + 'api/orders/' + orderId + '/status', {
     method: 'PUT',
-    headers: { Authorization: `Bearer ${token()}` },
+    headers: { Authorization: 'Bearer ' + token() },
     body: { status }
   })
   fetchOrders()
 }
 
+//  Order delete — live
 const deleteOrder = async (id) => {
   if (confirm('Delete this order?')) {
-    await $fetch(`http://localhost:5000/api/orders/${id}`, {
+    await $fetch(API_URL + 'api/orders/' + id, {
       method: 'DELETE',
-      headers: { Authorization: `Bearer ${token()}` }
+      headers: { Authorization: 'Bearer ' + token() }
     })
     fetchOrders()
   }
@@ -384,17 +401,24 @@ const cancelEdit = () => {
 
 const deleteProduct = (id) => { deleteConfirm.value = { show: true, id } }
 
+// ✅ Product delete — live
 const confirmDelete = async () => {
   try {
-    await $fetch(`http://localhost:5000/api/products/${deleteConfirm.value.id}`, {
+    // Sahi URL format: /api/products/5
+    await $fetch(`/api/products/${deleteConfirm.value.id}`, {
       method: 'DELETE',
-      headers: { Authorization: `Bearer ${token()}` }
+      baseURL: config.public.apiUrl, // config.public.apiUrl use karein jo .env se aa raha hai
+      headers: { 
+        Authorization: 'Bearer ' + token() 
+      }
     })
+
     deleteConfirm.value.show = false
     fetchProducts()
-  } catch (err) { console.error("Delete failed") }
+  } catch (err) { 
+    console.error('Delete failed:', err) 
+  }
 }
-
 // STATS
 const stats = computed(() => [
   { label: 'Total Pieces', value: products.value.length, suffix: 'Items' },
@@ -411,13 +435,10 @@ onMounted(() => {
 <style scoped>
 .font-cormorant { font-family: 'Cormorant Garamond', serif; }
 .font-montserrat { font-family: 'Montserrat', sans-serif; }
-
 .slide-up-enter-active { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .slide-up-enter-from { opacity: 0; transform: translateY(30px); }
-
 .fade-enter-active { transition: opacity 0.3s ease; }
 .fade-enter-from { opacity: 0; }
-
 .modal-enter-active { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .modal-enter-from { opacity: 0; transform: scale(0.9); }
 </style>

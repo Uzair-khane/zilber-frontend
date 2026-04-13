@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL // 👈 MUST match exactly
+    }
+  },
   compatibilityDate: '2024-04-03',
   future: {
     compatibilityVersion: 4,

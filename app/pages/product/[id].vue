@@ -144,13 +144,15 @@ const qty = ref(1)
 const cartAdded = ref(false)
 const sizeWarning = ref(false)
 
-const { data: product, pending } = await useFetch(`http://localhost:5000/api/products/${route.params.id}`)
+const config = useRuntimeConfig()
+const API_URL = config.public.apiUrl ?? 'http://72.61.124.30/api2'
+const { data: product, pending } = await useFetch(API_URL + 'api/products/' + route.params.id)
 
 // Full image URL — yahi cart mein pass hogi
 const fullImageUrl = computed(() => {
   if (!product.value?.image) return '/placeholder.png'
   if (product.value.image.startsWith('http')) return product.value.image
-  return `http://localhost:5000/${product.value.image.replace(/^\/+/, '')}`
+ return API_URL + '/' + product.value.image.replace(/^\/+/, '')
 })
 
 const handleAddToCart = () => {

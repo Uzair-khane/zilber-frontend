@@ -57,7 +57,7 @@
               Email Address
             </label>
             <div class="relative">
-              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 " fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
               </svg>
               <input
@@ -79,7 +79,7 @@
               Password
             </label>
             <div class="relative">
-              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 " fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
               <input
@@ -95,7 +95,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/50 transition-colors"
+                class="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
               >
                 <svg v-if="!showPassword" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -172,7 +172,9 @@ const loading = ref(false)
 const showPassword = ref(false)
 const emailFocused = ref(false)
 const passFocused = ref(false)
-
+const config = useRuntimeConfig()
+const API_URL = config.public.apiUrl
+// login function ke andar is tarah likhein:
 const login = async () => {
   if (!email.value || !password.value) {
     error.value = 'Please fill in all fields.'
@@ -180,19 +182,29 @@ const login = async () => {
   }
   error.value = ''
   loading.value = true
+
   try {
-    const res = await $fetch('http://localhost:5000/api/auth/login', {
+    // API_URL variable ko use karne ke bajaye directly config use karein
+    const res = await $fetch('/api/auth/login', {
       method: 'POST',
-      body: { email: email.value, password: password.value }
+      baseURL: config.public.apiUrl, // <--- Yeh sab se important hai
+      body: { 
+        email: email.value, 
+        password: password.value 
+      }
     })
+
     localStorage.setItem('admin_token', res.token)
     await navigateTo('/admin/products')
-  } catch {
+  } catch (err) {
+    console.error("Fetch Error:", err)
     error.value = 'Invalid email or password. Please try again.'
   } finally {
     loading.value = false
   }
 }
+console.log('ENV:', process.env.NUXT_PUBLIC_API_URL)
+console.log('CONFIG:', config.public.apiUrl)
 </script>
 
 <style scoped>
