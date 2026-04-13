@@ -186,6 +186,59 @@ const validateForm = () => {
   return true
 }
 
+const getFullImageUrl = (imagePath) => {
+  if (!imagePath) return ''
+  if (imagePath.startsWith('http')) return imagePath
+  return `${API_URL}/${imagePath.replace(/^\/+/, '')}`
+}
+
+const formatDate = () => {
+  return new Date().toLocaleDateString('en-PK', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+}
+
+const sendToWhatsApp = (generatedOrderId) => {
+  try {
+    const itemsMessage = cartStore.items.map((item, index) => {
+      const imageUrl = getFullImageUrl(item.image)
+      return (
+        `${index + 1}. ${item.name}\n` +
+        `   - Size: UK-${item.size || 'N/A'}\n` +
+        `   - Quantity: ${item.quantity}\n` +
+        `   - Price: Rs. ${(item.price * item.quantity).toLocaleString()}` +
+        (imageUrl ? `\n   - Image: ${imageUrl}` : '')
+      )
+    }).join('\n\n')
+
+    const message =
+      `*NEW ZILBER ORDER #${generatedOrderId}*\n\n` +
+
+      `*Customer Details*\n` +
+      `Name: ${form.value.name}\n` +
+      `Phone: ${form.value.phone}\n` +
+      `City: ${form.value.city}\n` +
+      `Address: ${form.value.address}\n` +
+      `Date: ${formatDate()}\n\n` +
+
+      `*Order Items*\n` +
+      `${itemsMessage}\n\n` +
+
+      `*Grand Total:* Rs. ${cartStore.totalPrice.toLocaleString()}\n` +
+      `*Shipping:* FREE\n` +
+      `*Payment:* Cash on Delivery\n\n` +
+
+      `Please confirm this order. JazakAllah! 🙏`
+
+    const whatsappUrl = `https://wa.me/923149535884?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
+  } catch (error) {
+    console.error('WhatsApp redirect error:', error)
+  }
+}
+
 const placeOrder = async (method) => {
   if (!validateForm()) return
   isProcessing.value = true
@@ -204,7 +257,7 @@ const placeOrder = async (method) => {
     orderSuccess.value = true
 
     if (method === 'whatsapp') {
-      sendToWhatsApp()
+      sendToWhatsApp(res.orderId)
     }
 
     setTimeout(() => {
@@ -221,46 +274,8 @@ const placeOrder = async (method) => {
   }
 }
 
-const sendToWhatsApp = () => {
-  const itemsText = cartStore.items.map((item, index) => {
-    const price = (item.price * item.quantity).toLocaleString()
-    const size = item.size || 'N/A'
-    return (
-      (index + 1) + '. *' + item.name + '*\n' +
-      '   - Size: UK-' + size + '\n' +
-      '   - Quantity: ' + item.quantity + '\n' +
-      '   - Price: Rs. ' + price
-    )
-  }).join('\n\n')
-
-  const total = cartStore.totalPrice.toLocaleString()
-  const date = new Date().toLocaleDateString('en-PK', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  })
-
-  const message = (
-    'Salam Zilber! I have placed a new order.\n\n' +
-    '*NEW ZILBER ORDER #' + orderId.value + '*\n\n' +
-    '*Customer Details*\n' +
-    'Name: ' + form.value.name + '\n' +
-    'Phone: ' + form.value.phone + '\n' +
-    'City: ' + form.value.city + '\n' +
-    'Address: ' + form.value.address + '\n' +
-    'Date: ' + date + '\n\n' +
-    '*Order Items*\n\n' +
-    itemsText + '\n\n' +
-    '*Grand Total: Rs. ' + total + '*\n' +
-    'Shipping: FREE\n' +
-    'Payment: Cash on Delivery\n\n' +
-    '_Please confirm this order. JazakAllah!_'
-  )
-
-  window.open('https://wa.me/923149535884?text=' + encodeURIComponent(message), '_blank')
-}
-
 useHead({ title: 'Checkout | Zilber Luxury Footwear' })
 </script>
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap');
 
