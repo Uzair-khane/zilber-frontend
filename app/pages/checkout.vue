@@ -14,7 +14,8 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-        <div class="lg:col-span-7 bg-white border border-black/[0.05] shadow-[0_20px_50px_rgba(0,0,0,0.02)] overflow-hidden animate-slide-up">
+        <div
+          class="lg:col-span-7 bg-white border border-black/[0.05] shadow-[0_20px_50px_rgba(0,0,0,0.02)] overflow-hidden animate-slide-up">
           <div class="h-1 bg-[#a1a09b7a]"></div>
           <div class="p-10">
             <div class="flex items-center gap-4 mb-10">
@@ -25,12 +26,16 @@
             <div class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Full Name</label>
+                  <label
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Full
+                    Name</label>
                   <input type="text" v-model="form.name" placeholder="Enter your full name"
                     class="w-full bg-[#FAF9F6] border border-black/10 px-5 py-4 text-xs text-black placeholder-slate-400 outline-none transition-all" />
                 </div>
                 <div>
-                  <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Phone Number</label>
+                  <label
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Phone
+                    Number</label>
                   <input type="text" v-model="form.phone" placeholder="03xx xxxxxxx"
                     class="w-full bg-[#FAF9F6] border border-black/10 px-5 py-4 text-xs text-black placeholder-slate-400 outline-none  transition-all" />
                 </div>
@@ -38,12 +43,15 @@
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">City</label>
+                  <label
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">City</label>
                   <input type="text" v-model="form.city" placeholder="Your city"
                     class="w-full bg-[#FAF9F6] border border-black/10 px-5 py-4 text-xs text-black placeholder-slate-400 outline-none  transition-all" />
                 </div>
                 <div>
-                  <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Payment Method</label>
+                  <label
+                    class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Payment
+                    Method</label>
                   <div class="flex items-center gap-3 bg-white border border-[#D4AF37]/30 px-5 py-4">
                     <Icon name="ph:money-fill" class="text-[#D4AF37] w-5 h-5" />
                     <span class="text-[11px] font-bold uppercase tracking-widest text-[#1A1A1A]">Cash On Delivery</span>
@@ -52,7 +60,8 @@
               </div>
 
               <div>
-                <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Full Address</label>
+                <label class="text-[10px] uppercase font-bold tracking-[0.2em] text-black/40 mb-3 block text-left">Full
+                  Address</label>
                 <textarea v-model="form.address" rows="3" placeholder="Street, area, landmark..."
                   class="w-full bg-[#FAF9F6] border border-black/10 px-5 py-4 text-xs text-black placeholder-slate-400 outline-none  transition-all resize-none"></textarea>
               </div>
@@ -60,12 +69,14 @@
               <transition name="fade">
                 <div v-if="validationError" class="flex items-center gap-3 bg-red-50 border border-red-100 px-5 py-4">
                   <Icon name="ph:warning-circle-bold" class="text-red-500 w-5 h-5" />
-                  <p class="text-[10px] text-red-600 font-bold uppercase tracking-widest">Please fill in all fields correctly.</p>
+                  <p class="text-[10px] text-red-600 font-bold uppercase tracking-widest">Please fill in all fields
+                    correctly.</p>
                 </div>
               </transition>
 
               <transition name="fade">
-                <div v-if="orderSuccess" class="flex items-center gap-3 bg-emerald-50 border border-emerald-100 px-5 py-4">
+                <div v-if="orderSuccess"
+                  class="flex items-center gap-3 bg-emerald-50 border border-emerald-100 px-5 py-4">
                   <Icon name="ph:check-circle-fill" class="text-emerald-500 w-5 h-5" />
                   <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">
                     Order #{{ orderId }} Confirmed! We'll contact you soon.
@@ -103,16 +114,21 @@
                 <div v-for="item in cartStore.items" :key="item.id + item.size"
                   class="flex gap-5 p-4 bg-[#FAF9F6] border border-black/[0.03] hover:border-[#D4AF37]/30 transition-all">
                   <div class="w-16 h-20 bg-white flex-shrink-0 border border-black/[0.05] overflow-hidden">
-                    <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-500" />
-                    <div v-else class="w-full h-full flex items-center justify-center font-serif italic text-black/10">Z</div>
+                    <img v-if="item.image" :src="item.image" :alt="item.name"
+                      class="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-500" />
+                    <div v-else class="w-full h-full flex items-center justify-center font-serif italic text-black/10">Z
+                    </div>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <span class="text-[8px] font-bold tracking-[0.4em] uppercase text-[#D4AF37] block mb-1">Premium</span>
+                    <span
+                      class="text-[8px] font-bold tracking-[0.4em] uppercase text-[#D4AF37] block mb-1">Premium</span>
                     <h4 class="font-serif italic text-base text-[#1A1A1A] leading-tight truncate">{{ item.name }}</h4>
                     <div class="flex items-center gap-2 mt-2">
-                       <span class="text-[9px] text-black/50 font-bold uppercase tracking-widest">UK {{ item.size || 'N/A' }}</span>
-                       <span class="text-black/20 text-[9px]">|</span>
-                       <span class="text-[9px] text-black/50 font-bold uppercase tracking-widest">Qty {{ item.quantity }}</span>
+                      <span class="text-[9px] text-black/50 font-bold uppercase tracking-widest">UK {{ item.size ||
+                        'N/A' }}</span>
+                      <span class="text-black/20 text-[9px]">|</span>
+                      <span class="text-[9px] text-black/50 font-bold uppercase tracking-widest">Qty {{ item.quantity
+                        }}</span>
                     </div>
                     <p class="text-[12px] font-bold text-[#1A1A1A] mt-2">
                       Rs. {{ (item.price * item.quantity).toLocaleString() }}
@@ -175,7 +191,7 @@ const placeOrder = async (method) => {
   isProcessing.value = true
 
   try {
-    const res = await $fetch(API_URL + '/api/orders', {
+    const res = await $fetch(API_URL + 'api/orders', {
       method: 'POST',
       body: {
         customer: form.value,
@@ -248,16 +264,61 @@ useHead({ title: 'Checkout | Zilber Luxury Footwear' })
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap');
 
-.font-serif { font-family: 'Cormorant Garamond', serif; }
-.animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
-.animate-slide-up { opacity: 0; animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
 
-.fade-enter-active, .fade-leave-active { transition: all 0.3s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-10px); }
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
 
-.custom-scrollbar::-webkit-scrollbar { width: 3px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: #FAF9F6; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #D4AF37; }
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #FAF9F6;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+}
 </style>
