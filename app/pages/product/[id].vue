@@ -20,19 +20,17 @@
         <!-- Image -->
         <div class="lg:col-span-7">
           <div class="aspect-[3/4] bg-[#F7F7F7] overflow-hidden group rounded-xl border border-gray-100 shadow-sm">
-            <img
-              :src="fullImageUrl"
-              :alt="product.name"
+            <img :src="fullImageUrl" :alt="product.name"
               class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              @error="(e) => e.target.src = '/placeholder.png'"
-            />
+              @error="(e) => e.target.src = '/placeholder.png'" />
           </div>
         </div>
 
         <!-- Details -->
         <div class="lg:col-span-5">
           <div class="lg:sticky lg:top-32">
-            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37] block mb-4">Pure Handcrafted Leather</span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37] block mb-4">Pure Handcrafted
+              Leather</span>
 
             <h1 class="text-3xl md:text-4xl font-light text-[#1A1A1A] mb-4 tracking-tight uppercase font-serif italic">
               {{ product.name }}
@@ -48,20 +46,18 @@
             <div class="mb-8">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-[11px] font-bold uppercase tracking-widest">Size (UK)</h3>
-                <button class="text-[9px] underline text-gray-400 uppercase tracking-widest hover:text-black">Size Guide</button>
+                <button class="text-[9px] underline text-gray-400 uppercase tracking-widest hover:text-black">Size
+                  Guide</button>
               </div>
               <div class="flex flex-wrap gap-2">
-                <button
-                  v-for="size in [6, 7, 8, 9, 10, 11, 12]"
-                  :key="size"
-                  @click="selectedSize = size"
+                <button v-for="size in [6, 7, 8, 9, 10, 11, 12]" :key="size" @click="selectedSize = size"
                   class="w-[55px] h-[50px] border transition-all text-sm font-medium flex items-center justify-center rounded-sm"
-                  :class="selectedSize === size ? 'border-black bg-black text-white shadow-lg' : 'border-gray-200 text-gray-500 hover:border-black'"
-                >
+                  :class="selectedSize === size ? 'border-black bg-black text-white shadow-lg' : 'border-gray-200 text-gray-500 hover:border-black'">
                   {{ size }}
                 </button>
               </div>
-              <p v-if="sizeWarning" class="mt-2 font-montserrat text-[10px] text-red-400 font-bold tracking-widest uppercase animate-pulse">
+              <p v-if="sizeWarning"
+                class="mt-2 font-montserrat text-[10px] text-red-400 font-bold tracking-widest uppercase animate-pulse">
                 Please select a size first!
               </p>
             </div>
@@ -70,11 +66,15 @@
             <div class="mb-10">
               <h3 class="text-[11px] font-bold uppercase tracking-widest mb-4">Quantity</h3>
               <div class="flex items-center w-max border border-gray-200 rounded-sm">
-                <button @click="qty > 1 ? qty-- : null" class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                <button @click="qty > 1 ? qty-- : null"
+                  class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
                   <Icon name="lucide:minus" class="w-3.5 h-3.5" />
                 </button>
-                <span class="w-14 text-center font-medium text-sm border-x border-gray-200 h-12 flex items-center justify-center">{{ qty }}</span>
-                <button @click="qty++" class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                <span
+                  class="w-14 text-center font-medium text-sm border-x border-gray-200 h-12 flex items-center justify-center">{{
+                    qty }}</span>
+                <button @click="qty++"
+                  class="w-12 h-12 flex items-center justify-center hover:bg-gray-50 transition-colors">
                   <Icon name="lucide:plus" class="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -82,10 +82,8 @@
 
             <!-- Buttons -->
             <div class="flex flex-col gap-3">
-              <button
-                @click="handleAddToCart"
-                class="relative w-full h-16 bg-black text-white uppercase text-[11px] font-bold tracking-[0.2em] overflow-hidden transition-all active:scale-[0.98]"
-              >
+              <button @click="handleAddToCart"
+                class="relative w-full h-16 bg-black text-white uppercase text-[11px] font-bold tracking-[0.2em] overflow-hidden transition-all active:scale-[0.98]">
                 <div v-if="!cartAdded" class="flex items-center justify-center gap-3">
                   <Icon name="lucide:shopping-bag" class="w-4 h-4" /> Add to Cart
                 </div>
@@ -94,17 +92,16 @@
                 </div>
               </button>
 
-              <button
-                @click="orderOnWhatsApp"
-                class="w-full h-16 border border-gray-200 flex items-center justify-center gap-3 uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-gray-50 transition-all active:scale-[0.98]"
-              >
+              <button @click="orderOnWhatsApp"
+                class="w-full h-16 border border-gray-200 flex items-center justify-center gap-3 uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-gray-50 transition-all active:scale-[0.98]">
                 <Icon name="logos:whatsapp-icon" class="text-xl" /> Order via WhatsApp
               </button>
             </div>
 
             <!-- Cart success toast -->
             <transition name="toast">
-              <div v-if="cartAdded" class="mt-4 flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
+              <div v-if="cartAdded"
+                class="mt-4 flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <p class="font-montserrat text-[10px] font-bold text-emerald-700 uppercase tracking-widest">
                   Added to cart —
@@ -116,7 +113,8 @@
             <div class="mt-12 pt-8 border-t border-gray-100">
               <h3 class="text-[11px] font-bold uppercase tracking-widest mb-4">Product Details</h3>
               <p class="text-sm text-gray-500 leading-relaxed font-light italic">
-                {{ product.description || 'This exclusive Zilber piece is handcrafted with the finest materials, ensuring both luxury and durability for any occasion.' }}
+                {{ product.description || `This exclusive Zilber piece is handcrafted with the finest materials,
+                ensuring both luxury and durability for any occasion.` }}
               </p>
             </div>
 
@@ -129,11 +127,11 @@
   <div v-else class="min-h-screen flex items-center justify-center text-center p-6">
     <div>
       <h2 class="font-serif italic text-2xl mb-4">Masterpiece Not Found</h2>
-      <NuxtLink to="/" class="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] underline">Return to Gallery</NuxtLink>
+      <NuxtLink to="/" class="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] underline">Return to
+        Gallery</NuxtLink>
     </div>
   </div>
 </template>
-
 <script setup>
 import { useCartStore } from '~/stores/cart'
 
@@ -144,15 +142,23 @@ const qty = ref(1)
 const cartAdded = ref(false)
 const sizeWarning = ref(false)
 
+// 1. Runtime Config se API URL uthayein
 const config = useRuntimeConfig()
-const API_URL = config.public.apiUrl ?? 'http://72.61.124.30/api2'
-const { data: product, pending } = await useFetch(API_URL + 'api/products/' + route.params.id)
+const API_URL = config.public.apiUrl.replace(/\/$/, '') // Aakhir wala slash hata deta hai
 
-// Full image URL — yahi cart mein pass hogi
+// 2. Fetch mein dynamic URL use karein
+const { data: product, pending } = await useFetch(`${API_URL}/api/products/${route.params.id}`)
+
+// 3. Full image URL ka sahi logic (localhost ko nikaal kar)
 const fullImageUrl = computed(() => {
   if (!product.value?.image) return '/placeholder.png'
+
+  // Agar image URL pehle se mukammal hai (http se shuru ho raha hai)
   if (product.value.image.startsWith('http')) return product.value.image
- return API_URL + '/' + product.value.image.replace(/^\/+/, '')
+
+  // Warna API_URL ke saath join karein (extra slashes saaf karke)
+  const cleanImagePath = product.value.image.replace(/^\/+/, '')
+  return `${API_URL}/${cleanImagePath}`
 })
 
 const handleAddToCart = () => {
@@ -161,13 +167,14 @@ const handleAddToCart = () => {
     setTimeout(() => sizeWarning.value = false, 2000)
     return
   }
-  // Full image URL ke saath cart mein add karo
+
+  // Full image URL ke saath cart mein add karein
   cartStore.addToCart({
     id: product.value.id,
     name: product.value.name,
     price: product.value.price,
     description: product.value.description,
-    image: fullImageUrl.value  // ← Full URL pass ho rahi hai
+    image: fullImageUrl.value
   }, selectedSize.value, qty.value)
 
   cartAdded.value = true
@@ -198,10 +205,24 @@ onMounted(() => cartStore.loadFromStorage())
 </script>
 
 <style scoped>
-.font-serif { font-family: 'Cormorant Garamond', serif; }
-.font-montserrat { font-family: 'Montserrat', sans-serif; }
-.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
-.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(-8px); }
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
 </style>
 ```
 
@@ -210,13 +231,13 @@ onMounted(() => cartStore.loadFromStorage())
 ## Image Flow Summary: ✅
 ```
 Database (URL stored)
-    ↓ getImageUrl() → Full URL banta hai
+↓ getImageUrl() → Full URL banta hai
 Product Listing Page
-    ↓ fullImageUrl pass hoti hai cart mein
+↓ fullImageUrl pass hoti hai cart mein
 Product Detail Page
-    ↓ image: fullImageUrl.value
+↓ image: fullImageUrl.value
 Cart Store (localStorage)
-    ↓ item.image = full URL
+↓ item.image = full URL
 Cart Page → image dikhti hai ✅
 Checkout Page → image dikhti hai ✅
 WhatsApp message → image URL jata hai ✅

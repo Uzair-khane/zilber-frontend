@@ -133,9 +133,13 @@ const getImageUrl = (imagePath) => {
 
 const fetchProducts = async () => {
   try {
-    const response = await $fetch(API_URL + 'api/products')
-    const result = await response.json()
-    allProducts.value = result
+    // API_URL ki jagah config use karein aur dhyan dein ke slash (/) double na ho jaye
+    const response = await $fetch(`${config.public.apiUrl}api/products`)
+
+    // Nuxt $fetch direct data deta hai, .json() ki zaroorat nahi
+    allProducts.value = response
+
+    console.log('Data fetched successfully:', response)
   } catch (error) {
     console.error('Backend fetch error:', error)
   }
