@@ -133,7 +133,7 @@ const getImageUrl = (imagePath) => {
 
 const fetchProducts = async () => {
   try {
-    const response = await fetch(API_URL + 'api/products')
+    const response = await fetch(API_URL + '/api/products')
     const result = await response.json()
     allProducts.value = result
   } catch (error) {
