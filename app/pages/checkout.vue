@@ -128,7 +128,7 @@
                         'N/A' }}</span>
                       <span class="text-black/20 text-[9px]">|</span>
                       <span class="text-[9px] text-black/50 font-bold uppercase tracking-widest">Qty {{ item.quantity
-                        }}</span>
+                      }}</span>
                     </div>
                     <p class="text-[12px] font-bold text-[#1A1A1A] mt-2">
                       Rs. {{ (item.price * item.quantity).toLocaleString() }}
@@ -206,32 +206,31 @@ const sendToWhatsApp = (generatedOrderId) => {
       const imageUrl = getFullImageUrl(item.image)
       return (
         `${index + 1}. ${item.name}\n` +
-        `   - Size: UK-${item.size || 'N/A'}\n` +
-        `   - Quantity: ${item.quantity}\n` +
-        `   - Price: Rs. ${(item.price * item.quantity).toLocaleString()}` +
-        (imageUrl ? `\n   - Image: ${imageUrl}` : '')
+        `   📏 Size: UK-${item.size || 'N/A'}\n` +
+        `   🔢 Quantity: ${item.quantity}\n` +
+        `   🏷️ Price: Rs. ${(item.price * item.quantity).toLocaleString()}` +
+        (imageUrl ? `\n   🖼️ Image: ${imageUrl}` : '')
       )
     }).join('\n\n')
 
     const message =
-      `*NEW ZILBER ORDER #${generatedOrderId}*\n\n` +
+      `🛍️ *NEW ZILBER ORDER #${generatedOrderId}*\n\n` +
 
-      `*Customer Details*\n` +
+      `👤 *Customer Details*\n` +
       `Name: ${form.value.name}\n` +
       `Phone: ${form.value.phone}\n` +
-      `City: ${form.value.city}\n` +
-      `Address: ${form.value.address}\n` +
-      `Date: ${formatDate()}\n\n` +
+      `🏙️ City: ${form.value.city}\n` +
+      `📍 Address: ${form.value.address}\n` +
+      `📅 Date: ${formatDate()}\n\n` +
 
-      `*Order Items*\n` +
+      `🛒 *Order Items*\n` +
       `${itemsMessage}\n\n` +
 
-      `*Grand Total:* Rs. ${cartStore.totalPrice.toLocaleString()}\n` +
-      `*Shipping:* FREE\n` +
-      `*Payment:* Cash on Delivery\n\n` +
+      `💰 *Grand Total:* Rs. ${cartStore.totalPrice.toLocaleString()}\n` +
+      `🚚 *Shipping:* FREE\n` +
+      `🧾 *Payment:* Cash on Delivery\n\n` +
 
       `Please confirm this order. JazakAllah! 🙏`
-
     const whatsappUrl = `https://wa.me/923149535884?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   } catch (error) {
