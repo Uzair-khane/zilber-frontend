@@ -1,31 +1,25 @@
 <template>
   <div class="fixed top-0 w-full z-[100] font-['Inter',sans-serif]">
     <div class="bg-[#2C3E50] text-white py-2.5 px-4 text-center text-[10px] font-semibold tracking-[0.15em] uppercase">
-      Free Delivery Nationwide on Orders Above PKR 10,000
+      Free Delivery All Over Pakistan Shop Now at Zilber.store
     </div>
 
     <header class="bg-white/95 backdrop-blur-md border-b border-[#F2F2F2] text-[#1B1B1B]">
       <div class="max-w-[1440px] mx-auto px-6 lg:px-[60px] flex items-center justify-between h-[70px] lg:h-[90px]">
-        
+
         <div class="flex-shrink-0">
           <NuxtLink to="/" @click="closeMobileMenu" class="group block overflow-hidden">
-            <img 
-              src="../assets/images/logo1.png" 
-              alt="Zilber Premium" 
-              class="h-[38px] lg:h-[70px] w-auto grayscale group-hover:grayscale-0 transition-all duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-0.5" 
-            />
+            <img src="../assets/images/logo1.png" alt="Zilber Premium"
+              class="h-[38px] lg:h-[70px] w-auto grayscale group-hover:grayscale-0 transition-all duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-0.5" />
           </NuxtLink>
         </div>
 
         <nav class="hidden lg:flex items-center gap-10 h-full">
-          <NuxtLink
-            v-for="link in navLinks"
-            :key="link.name"
-            :to="link.path"
-            class="relative text-[11px] font-semibold tracking-wider uppercase text-[#333333] hover:text-[#2C3E50] transition-colors duration-300 py-2 group"
-          >
+          <NuxtLink v-for="link in navLinks" :key="link.name" :to="link.path"
+            class="relative text-[11px] font-semibold tracking-wider uppercase text-[#333333] hover:text-[#2C3E50] transition-colors duration-300 py-2 group">
             {{ link.name }}
-            <span class="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-[#2C3E50] transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full"></span>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-[1.5px] bg-[#2C3E50] transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full"></span>
           </NuxtLink>
         </nav>
 
@@ -34,12 +28,11 @@
             <Icon name="lucide:search" class="w-[22px] h-[22px] stroke-[1.5]" />
           </button>
 
-          <NuxtLink to="/cart" class="p-2 relative hover:text-[#2C3E50] hover:-translate-y-1 transition-all duration-300">
+          <NuxtLink to="/cart"
+            class="p-2 relative hover:text-[#2C3E50] hover:-translate-y-1 transition-all duration-300">
             <Icon name="lucide:shopping-bag" class="w-[22px] h-[22px] stroke-[1.5]" />
-            <span 
-              v-if="cartStore.totalItems > 0"
-              class="absolute top-1 right-1 bg-[#1B1B1B] text-white text-[8px] font-bold min-w-[16px] h-[16px] rounded-full flex items-center justify-center border-2 border-white"
-            >
+            <span v-if="cartStore.totalItems > 0"
+              class="absolute top-1 right-1 bg-[#1B1B1B] text-white text-[8px] font-bold min-w-[16px] h-[16px] rounded-full flex items-center justify-center border-2 border-white">
               {{ cartStore.totalItems }}
             </span>
           </NuxtLink>
@@ -66,15 +59,12 @@
           </div>
 
           <nav class="flex flex-col">
-            <NuxtLink
-              v-for="link in navLinks"
-              :key="link.name"
-              :to="link.path"
+            <NuxtLink v-for="link in navLinks" :key="link.name" :to="link.path"
               class="flex justify-between items-center py-4 border-b border-gray-50 text-[13px] font-semibold uppercase tracking-wide group"
-              @click="closeMobileMenu"
-            >
+              @click="closeMobileMenu">
               <span class="group-hover:translate-x-2 transition-transform duration-300">{{ link.name }}</span>
-              <Icon name="lucide:arrow-right" class="w-4 h-4 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              <Icon name="lucide:arrow-right"
+                class="w-4 h-4 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
             </NuxtLink>
           </nav>
 
@@ -132,9 +122,23 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
 
-.slide-enter-active, .slide-leave-active { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.slide-enter-from, .slide-leave-to { transform: translateX(-100%); }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
+}
 </style>
