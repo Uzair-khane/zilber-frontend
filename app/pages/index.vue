@@ -2,7 +2,9 @@
   <div class="relative min-h-screen bg-offwhite overflow-x-hidden">
     
     <a 
-      href="https://wa.me/923149535884?text=Salam Zilber! I'm interested in your premium Chappal collection." 
+      href="https://wa.me/923149535884?text=Welcome to the world of Zilber. 👞✨
+
+Thank you for reaching out. We are thrilled to help you find the perfect pair of handcrafted Peshawari Chappals. Whether it’s for a wedding or daily luxury, our master artisans are at your service.." 
       target="_blank"
       class="fixed bottom-8 right-8 z-[100] group flex items-center gap-3 transition-all duration-500"
     >
@@ -24,22 +26,31 @@
       </div>
       <div class="absolute inset-0 "></div>
       
-      <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        <h1 class="text-5xl sm:text-6xl md:text-7xl mt-5 lg:text-8xl font-serif text-white mb-6 tracking-tighter drop-shadow-2xl">
-          The Modern Artisan
-        </h1>
-        <p class="text-xl md:text-2xl text-offwhite font-light tracking-widest mb-10 max-w-3xl mx-auto opacity-90">
-          Redefining traditional Charsada footwear with unprecedented luxury and unparalleled precision.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <NuxtLink to="/collections/new-arrivals" class="bg-black text-white px-10 py-4 font-bold uppercase hover:bg-[#0e0d0d] transition-all duration-500 shadow-xl">
-            Explore Collection
-          </NuxtLink>
-          <a href="https://wa.me/923149535884" class="border border-white/40 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] hover:bg-white/10 backdrop-blur-sm transition-all duration-500">
-            Direct Contact
-          </a>
-        </div>
-      </div>
+     <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+  <h1 class="text-5xl sm:text-5xl md:text-6xl mt-5 lg:text-7xl font-serif text-white mb-6 tracking-tighter drop-shadow-2xl">
+  Zilber The Gold Standard of Handcrafted Leather
+  </h1>
+
+  <p class="text-xl md:text-2xl text-offwhite font-light tracking-widest mb-10 max-w-3xl mx-auto opacity-90">
+   Zilber brings you the legendary Charsada and Peshawari Chappal, redefined with premium leather and elite precision. Designed for those who appreciate perfection.
+  </p>
+
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <NuxtLink 
+      to="/collections/new-arrivals" 
+      class="bg-black text-white px-10 py-4 font-bold uppercase hover:bg-[#0e0d0d] transition-all duration-500 shadow-xl"
+    >
+      Shop the Collection
+    </NuxtLink>
+
+    <a 
+      href="https://wa.me/923149535884" 
+      class="border border-white/40 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] hover:bg-white/10 backdrop-blur-sm transition-all duration-500"
+    >
+      Custom Order
+    </a>
+  </div>
+</div>
     </section>
 <div>
   <Product/>

@@ -7,7 +7,7 @@
           <img src="../assets/images/logo1.png" alt="Zilber Logo" class="w-full h-auto brightness-0 -ml-8" />
         </div>
         <p class="text-[13px] text-gray-500 leading-relaxed ">
-          Authentic handcrafted Charsadda Chappals jahan riwayat milti hai modern comfort se.
+        Zilber Real leather, handmade comfort. We bring you the original Charsadda and Peshawari Chappal with a modern touch. Quality you can feel, style that lasts.
         </p>
 
         <div class="flex gap-3 mt-2">
@@ -53,7 +53,7 @@
       <div class="flex flex-col gap-4">
         <h3 class="text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] mb-6 font-extrabold">Direct Support</h3>
         <p class="text-[13px] text-gray-500 leading-relaxed">
-          Quick support aur fast checkout ke liye humein WhatsApp par message karein.
+          Message us on WhatsApp for quick support and fast checkout.
         </p>
         <button 
           @click="openWhatsApp" 

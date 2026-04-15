@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/sitemap": "^8.0.13",
     "@pinia/nuxt": "^0.5.0",
     "nodemailer": "^8.0.4",
     "nuxt": "^3.12.0",

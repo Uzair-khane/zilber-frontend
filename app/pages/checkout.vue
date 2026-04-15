@@ -206,9 +206,9 @@ const sendToWhatsApp = (generatedOrderId) => {
       const imageUrl = getFullImageUrl(item.image)
       return (
         `${index + 1}. ${item.name}\n` +
-        `   📏 Size: UK-${item.size || 'N/A'}\n` +
-        `   🔢 Quantity: ${item.quantity}\n` +
-        `   🏷️ Price: Rs. ${(item.price * item.quantity).toLocaleString()}` +
+        `    Size: UK-${item.size || 'N/A'}\n` +
+        `    Quantity: ${item.quantity}\n` +
+        `    Price: Rs. ${(item.price * item.quantity).toLocaleString()}` +
         (imageUrl ? `\n   🖼️ Image: ${imageUrl}` : '')
       )
     }).join('\n\n')
@@ -219,9 +219,9 @@ const sendToWhatsApp = (generatedOrderId) => {
       `👤 *Customer Details*\n` +
       `Name: ${form.value.name}\n` +
       `Phone: ${form.value.phone}\n` +
-      `🏙️ City: ${form.value.city}\n` +
-      `📍 Address: ${form.value.address}\n` +
-      `📅 Date: ${formatDate()}\n\n` +
+      ` City: ${form.value.city}\n` +
+      ` Address: ${form.value.address}\n` +
+      ` Date: ${formatDate()}\n\n` +
 
       `🛒 *Order Items*\n` +
       `${itemsMessage}\n\n` +
