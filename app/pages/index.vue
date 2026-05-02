@@ -28,7 +28,7 @@ Thank you for reaching out. We are thrilled to help you find the perfect pair of
       
      <div class="relative z-10 mt-3 text-center  max-w-5xl mx-auto">
   <h1 class="
-     font-sans text-3xl sm:text-4xl md:text-5xl mt-5 lg:text-6xl  text-white  tracking-tighter drop-shadow-2xl">
+     font-sans text-4xl mx-7 font-bold sm:text-5xl md:text-6xl mt-5 lg:text-7xl  text-white  tracking-tighter drop-shadow-2xl">
   Zilber The Gold Standard of Handcrafted Leather
   </h1>
 
