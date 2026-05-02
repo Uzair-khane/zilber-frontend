@@ -26,26 +26,27 @@ Thank you for reaching out. We are thrilled to help you find the perfect pair of
       </div>
       <div class="absolute inset-0 "></div>
       
-     <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
-  <h1 class="text-5xl sm:text-5xl md:text-6xl mt-5 lg:text-7xl font-serif text-white mb-6 tracking-tighter drop-shadow-2xl">
+     <div class="relative z-10 mt-3 text-center  max-w-5xl mx-auto">
+  <h1 class="
+     font-sans text-3xl sm:text-4xl md:text-5xl mt-5 lg:text-6xl  text-white  tracking-tighter drop-shadow-2xl">
   Zilber The Gold Standard of Handcrafted Leather
   </h1>
 
-  <p class="text-xl md:text-2xl text-offwhite font-light tracking-widest mb-10 max-w-3xl mx-auto opacity-90">
+  <p class="text-xl mx-4 mt-7 md:text-2xl text-offwhite font-light tracking-widest mb-10 max-w-3xl mx-auto opacity-90">
    Zilber brings you the legendary Charsada and Peshawari Chappal, redefined with premium leather and elite precision. Designed for those who appreciate perfection.
   </p>
 
   <div class="flex flex-col sm:flex-row gap-4 justify-center">
     <NuxtLink 
       to="/collections/new-arrivals" 
-      class="bg-black text-white px-10 py-4 font-bold uppercase hover:bg-[#0e0d0d] transition-all duration-500 shadow-xl"
+      class="bg-black text-white mx-6 px-10 py-4 font-bold uppercase hover:bg-[#0e0d0d] transition-all duration-500 shadow-xl"
     >
       Shop the Collection
     </NuxtLink>
 
     <a 
       href="https://wa.me/923149535884" 
-      class="border border-white/40 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] hover:bg-white/10 backdrop-blur-sm transition-all duration-500"
+      class="border border-white/40 mx-6 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] hover:bg-white/10 backdrop-blur-sm transition-all duration-500"
     >
       Custom Order
     </a>
